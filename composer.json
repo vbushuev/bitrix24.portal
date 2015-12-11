@@ -6,8 +6,26 @@
     "type": "project",
     "require": {
         "php": ">=5.5.9",
-        "laravel/framework": "5.1.*"
+        "laravel/framework": "5.1.*",
+        "vsb/contur-focus": "1.0.0"
     },
+    "repositories":[
+        {
+            "type":"package",
+            "package":{
+                "name":"vsb/contur-focus",
+                "version":"1.0",
+                "source":{
+                    "type":"git",
+                    "url":"https://github.com/vbushuev/contur-focus",
+                    "reference":"master"
+                },
+                "autoload":{
+                    "psr-4": {"Acme\\": "src/"}
+                }
+            }
+        }
+    ],
     "require-dev": {
         "fzaninotto/faker": "~1.4",
         "mockery/mockery": "0.9.*",

@@ -14,3 +14,4 @@
 Route::get('/', function () {
     return view('welcome');
 });
+Route::controller('contur-focus', 'ConturFocusController');
