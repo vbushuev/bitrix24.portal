@@ -1,0 +1,21 @@
+.form input,
+.form select,
+.form button {
+  height: 2em;
+  line-height: 2em;
+  color: rgba(0,0,0,0.8);
+  border: rgba(0,0,0,0.5) 1px solid;
+  border-radius: 0.4em;
+  font-size: 1em;
+  width: 12em;
+  padding: 0 0.4em;
+}
+.form button {
+  width: 6em;
+  height: 2em;
+  line-height: 2em;
+  border: none;
+  color: rgba(0,0,0,0.8);
+  background-color: #94b9dc;
+  cursor: pointer;
+}

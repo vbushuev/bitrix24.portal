@@ -21,7 +21,7 @@
                     "reference":"master"
                 },
                 "autoload":{
-                    "psr-4": {"Acme\\": "src/"}
+                    "psr-4": {"vsb\\": "src/"}
                 }
             }
         }
