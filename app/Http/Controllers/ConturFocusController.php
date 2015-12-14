@@ -19,4 +19,7 @@ class ConturFocusController extends Controller
     {
         //
     }
+    public function getIndex(Request $rq){
+        return view('contur-focus.index');
+    }
 }
