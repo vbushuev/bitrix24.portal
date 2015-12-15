@@ -26,10 +26,20 @@ class ConturFocusController extends Controller
         ];
         if($search!=='empty'){
             $cf=new ConturFocus([
+                'proxy' => [
+                    /*
+                    'type' => CURLPROXY_HTTP,
+                    'host' => '192.168.11.7',
+                    'port' => 8080,
+                    'auth' => CURLAUTH_NTLM,
+                    'userpwd' => 'v.bushuev:Vampire04'
+                    */
+                ],
 				'trace' =>[
 					'file' => '../storage/logs/curltrace'
 				]
 			]);
+            print_r($cf->getOptions());
             $rs['result']=$cf->Search($search);
         }
         return response()->json($rs);

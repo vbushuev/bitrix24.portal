@@ -5,3 +5,7 @@ Homestead.json
 .env
 
 .remote-sync.json
+
+composer.lock
+
+composer.lock

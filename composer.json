@@ -18,7 +18,7 @@
                 "source":{
                     "type":"git",
                     "url":"https://github.com/vbushuev/contur-focus",
-                    "reference":"master"
+                    "reference":"release-1-0"
                 },
                 "autoload":{
                     "psr-4": {"vsb\\": "src/vsb"}
