@@ -78,7 +78,8 @@ return [
     |
     */
 
-    'key' => env('APP_KEY', 'vsb.tym.aef138bbd.ffade058'),
+    //'key' => env('APP_KEY', 'vsb.tym.aef138bbd.ffade058'),
+    'key' => env('APP_KEY', 'Qu8P9tMBqi7cYLYl'),
 
     'cipher' => 'AES-128-CBC',
 
