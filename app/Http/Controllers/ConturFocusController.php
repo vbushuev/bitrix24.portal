@@ -19,6 +19,10 @@ class ConturFocusController extends Controller
     {
         return view('contur-focus.search');
     }
+    public function getTest(Request $rq){
+        
+    }
+    public function postTest(Request $rq){}
     public function postSearch(Request $rq){
         $search = $rq->input('search','empty');
         $rs=[

@@ -7,7 +7,8 @@
     "require": {
         "php": ">=5.5.9",
         "laravel/framework": "5.1.*",
-        "vsb/contur-focus": "^1.0"
+        "vsb/contur-focus": "^1.0",
+        "simplecurl": "^1.0"
     },
     "repositories":[
         {
@@ -22,6 +23,21 @@
                 },
                 "autoload":{
                     "psr-4": {"vsb\\": "src/vsb"}
+                }
+            }
+        },
+        {
+            "type":"package",
+            "package":{
+                "name":"simplecurl",
+                "version":"1.0",
+                "source":{
+                    "type":"git",
+                    "url":"https://github.com/mogetutu/simplePHP-curl",
+                    "reference":"master"
+                },
+                "autoload":{
+                    "files": ["libraries/Curl.php"]
                 }
             }
         }
