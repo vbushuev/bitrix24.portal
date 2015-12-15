@@ -6,7 +6,6 @@ use Illuminate\Http\Request;
 
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
-use vsb\ConturFocus as ConturFocus;
 
 class ConturFocusController extends Controller
 {
@@ -25,7 +24,8 @@ class ConturFocusController extends Controller
             'posted' => '$search:'.$search
         ];
         if($search!=='empty'){
-            $cf=new ConturFocus([
+            $cf = new \vsb\ConturFocus;
+            $cf=new \vsb\ConturFocus([
 				'trace' =>[
 					'file' => '../storage/logs/curltrace'
 				]
