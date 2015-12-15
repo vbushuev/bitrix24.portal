@@ -4,8 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "6a95e62fad3e7924e2b8b473a65458e4",
-    "content-hash": "fab799685421cf2fe49f5a9b76bf15eb",
+    "hash": "fc7731ab5cd5a5243008e7abf7ffbef9",
+    "content-hash": "e15f0ff8490f9f30ed4cedbe48d64d5a",
     "packages": [
         {
             "name": "classpreloader/classpreloader",
@@ -1884,7 +1884,7 @@
             "type": "library",
             "autoload": {
                 "psr-4": {
-                    "vsb\\": "src/"
+                    "vsb\\": "src/vsb"
                 }
             }
         }

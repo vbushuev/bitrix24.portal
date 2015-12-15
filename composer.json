@@ -21,7 +21,7 @@
                     "reference":"master"
                 },
                 "autoload":{
-                    "psr-4": {"vsb\\": "src/"}
+                    "psr-4": {"vsb\\": "src/vsb"}
                 }
             }
         }
