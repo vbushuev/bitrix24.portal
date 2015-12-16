@@ -22,6 +22,7 @@ class Bitrix24Controller extends Controller
             'auth' => $bd['access_token']
         ];
         $postParams = [
+            'auth' => $bd['access_token'],
             'CODE' =>  'contur-focus',
             'HANDLER' =>  'http://bitrix24.portal.bs2/contur-focus/search',
             //'AUTH_USER_ID' =>  1,
@@ -190,7 +191,8 @@ class Bitrix24Controller extends Controller
             'domain' => 'oookbrenessans.bitrix24.ru',
             'client_id' => 'local.566973a3ec7410.58002193',
             'secret' => '802232f8073927f1b07b812c4b9a4b3f',
-            'scope' => 'disk,crm,task,user,bizproc,im,log,mailservice,department'
+            'scope' => [] //['disk','crm','task','user','bizproc','im','log','mailservice','department']
+            //'scope' => ['bizproc']
         ];
         $rq->session()->put('bitrix24Oauth',$bd);
         return $bd;
