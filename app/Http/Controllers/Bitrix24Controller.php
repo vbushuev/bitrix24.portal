@@ -11,8 +11,7 @@ use Illuminate\Support\Facades\Redirect;
 use App\Http\Controllers\Controller;
 
 
-class Bitrix24Controller extends Controller
-{
+class Bitrix24Controller extends Controller{
     public function getIndex(Request $rq){
         return view('bitrix24.index',$this->getBitrix24Data($rq));
     }
