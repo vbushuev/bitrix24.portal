@@ -16,93 +16,63 @@ class Bitrix24Controller extends Controller{
         'domain' => 'oookbrenessans.bitrix24.ru',
         'client_id' => 'local.5672afb9c59445.45097940',
         'secret' => 'b13fe032dea328304189d5d5ceeef906',
-        'scope' => ['disk','crm','task','user','bizproc','im','log','mailservice','department']
+        'scope' => 'user,bizproc,crm,task,disk,im,log,mailservice,deparment'
     ];
     public function getIndex(Request $rq){
         return view('bitrix24.index',$this->getBitrix24Data($rq));
     }
     public function getInstall(Request $rq){
-        $bd = $this->getBitrix24Data($rq);
-        $params = [
-            'auth' => $bd['access_token']
-        ];
-        $postParams = [
-            'auth' => $bd['access_token'],
-            'CODE' =>  'contur-focus',
-            'HANDLER' =>  'http://bitrix24.portal.bs2/contur-focus/search',
-            //'AUTH_USER_ID' =>  1,
-            //'USE_SUBSCRIPTION' =>  'Y',
-            'NAME' =>  [
-                'ru' =>  'Проверка сервисом Контур-Фокус',
-                'en' =>  'Contur-Focus Legacity check'
-            ],
-            'DESCRIPTION' =>  [
-                'ru' =>  'Проверяет статусс юрлица',
-                'en' =>  'Lagacity check'
-            ],
-             'PROPERTIES' =>  [
-                'q' =>  [
-                   'Name' =>  [
-                      'ru' =>  'Наименоваание организации',
-                      'en' =>  'Entity name'
-                   ],
-                   'Description' =>  [
-                      'ru' =>  'Введите Наименоваание организации',
-                      'en' =>  'Input Entity name'
-                   ],
-                   'Type' =>  'string',
-                   'Required' =>  'Y',
-                   'Multiple' =>  'N',
-                   'Default' =>  '{=Document:NAME}'
-                ]
-             ],
-             'RETURN_PROPERTIES' =>  [
-                'outputString' =>  [
-                   'Name' =>  [
-                      'ru' =>  'MD5',
-                      'en' =>  'MD5'
-                   ],
-                   'Type' =>  'string',
-                   'Multiple' =>  'N',
-                   'Default' =>  null
-                ]
-             ],
-             //'DOCUMENT_TYPE' =>  ['lists', 'BizprocDocument', 'iblock_1'],
-             //'FILTER' =>  [INCLUDE => [['lists']]]
-         ];
-         $curl= new \Curl();
-         $url = 'https://'.$bd['domain'].'/rest/bizproc.activity.add?'.http_build_query($params);
-         $curl->create($url);
-         $curl->option(CURLOPT_RETURNTRANSFER, true);
-         $curl->option(CURLOPT_SSL_VERIFYPEER, false);
-         $curl->option(CURLOPT_FOLLOWLOCATION, true);
-         print_r(http_build_query($postParams));
-         $curl->post(http_build_query($postParams));
-         $res = json_decode($curl->execute());
-         print_r($res);
-         echo "<br/>".$curl->error_code; // int
-         echo "<br/>".$curl->error_string;
-
-         // Information
-         print_r($curl->info); // array
+        $rs = $this->callBX([
+            'action' => 'bizproc.activity.add',
+            'params' => [
+                'CODE' =>  'contur-focus',
+                'HANDLER' =>  'http://bitrix24.portal.bs2/contur-focus/search',
+                //'AUTH_USER_ID' =>  1,
+                //'USE_SUBSCRIPTION' =>  'Y',
+                'NAME' =>  [
+                    'ru' =>  'Проверка сервисом Контур-Фокус',
+                    'en' =>  'Contur-Focus Legacity check'
+                ],
+                'DESCRIPTION' =>  [
+                    'ru' =>  'Проверяет статусс юрлица',
+                    'en' =>  'Lagacity check'
+                ],
+                 'PROPERTIES' =>  [
+                    'q' =>  [
+                       'Name' =>  [
+                          'ru' =>  'Наименоваание организации',
+                          'en' =>  'Entity name'
+                       ],
+                       'Description' =>  [
+                          'ru' =>  'Введите Наименоваание организации',
+                          'en' =>  'Input Entity name'
+                       ],
+                       'Type' =>  'string',
+                       'Required' =>  'Y',
+                       'Multiple' =>  'N',
+                       'Default' =>  '{=Document:NAME}'
+                    ]
+                 ],
+                 'RETURN_PROPERTIES' =>  [
+                    'outputString' =>  [
+                       'Name' =>  [
+                          'ru' =>  'MD5',
+                          'en' =>  'MD5'
+                       ],
+                       'Type' =>  'string',
+                       'Multiple' =>  'N',
+                       'Default' =>  null
+                    ]
+                 ],
+                 //'DOCUMENT_TYPE' =>  ['lists', 'BizprocDocument', 'iblock_1'],
+                 //'FILTER' =>  [INCLUDE => [['lists']]]
+             ]
+        ],$rq);
     }
     public function getMethods(Request $rq){
-        $bd = $this->getBitrix24Data($rq);
-        $params = [
-            'auth' => $bd['access_token']
-        ];
-        $curl= new \Curl();
-        $url = 'https://'.$bd['domain'].'/rest/methods.json?'.http_build_query($params);
-        $curl->create($url);
-        $curl->option(CURLOPT_RETURNTRANSFER, true);
-        $curl->option(CURLOPT_SSL_VERIFYPEER, false);
-        $curl->option(CURLOPT_FOLLOWLOCATION, true);
-        $res = json_decode($curl->execute());
-        print_r($res);
-        echo "<br/>".$curl->error_code; // int
-        echo "<br/>".$curl->error_string;
-        // Information
-        print_r($curl->info); // array
+        $rs = $this->callBX([
+            'action' => 'methods'
+        ],$rq);
     }
     public function getOauth(Request $rq){
         $bd = $this->getBitrix24Data($rq);
@@ -110,28 +80,21 @@ class Bitrix24Controller extends Controller{
         $refresh = $rq->input('refresh',false);
         $clear = $rq->input('clear',false);
         if($code!==false){
-            $params = [
-                'client_id' => $bd['client_id'],
-                'client_secret' => $bd['secret'],
-                'grant_type' => 'authorization_code',
-                'code' => $code,
-                //'scope' => $bd['scope'],
-                'redirect_uri' => urlencode($rq->url())
-            ];
-            $curl= new \Curl();
-            $url = 'https://'.$bd['domain'].'/oauth/token/?'.http_build_query($params);
-            $curl->create($url);
-            $curl->option(CURLOPT_RETURNTRANSFER, true);
-            $curl->option(CURLOPT_SSL_VERIFYPEER, false);
-            $curl->option(CURLOPT_FOLLOWLOCATION, true);
 
-            $res = json_decode($curl->execute());
-            print_r($res);
-            echo "<br/>".$curl->error_code; // int
-            echo "<br/>".$curl->error_string;
-
-            // Information
-            print_r($curl->info); // array
+            $res = $this->callBX([
+                'action' => ''
+                ,'path' => '/oauth/token/'
+                ,'method' => 'get'
+                ,'protocol' => ''
+                ,'params' => [
+                    'client_id' => $bd['client_id'],
+                    'client_secret' => $bd['secret'],
+                    'grant_type' => 'authorization_code',
+                    'code' => $code,
+                    'scope' => $bd['scope'],
+                    'redirect_uri' => urlencode($rq->url())
+                ]
+            ],$rq);
             $bd['access_token'] = $res->access_token;
             $bd['expires_in'] = time()+$res->expires_in;
 		    $bd['user_id'] = $res->user_id;
@@ -186,6 +149,11 @@ class Bitrix24Controller extends Controller{
         }
         return Redirect::to('/bitrix24');
     }
+    public function getUserinfo(Request $rq){
+        $rs = $this->callBX([
+            'action' => 'user.current'
+        ],$rq);
+    }
     protected function isAuthenticated($bd){
         return isset($bd['access_token'])&&!empty($bd['access_token']);
     }
@@ -200,39 +168,38 @@ class Bitrix24Controller extends Controller{
     protected function setBitrix24Data(Request $rq,$bd){
         $rq->session()->put('bitrix24Oauth',$bd);
     }
+    protected function callBX($p = [],Request $rq){
+        $bd = $this->getBitrix24Data($rq);
+        $method = isset($p['method'])?$p['method']:'post';
+        $params = isset($p['params'])?$p['params']:[];
+        $params['auth'] = isset($params['auth'])?$params['auth']:(isset($bd['access_token'])?$bd['access_token']:'');
+        $curl= new \Curl();
+        $url = 'https://'
+            .(isset($p['domain'])?$p['domain']:$bd['domain'])
+            .(isset($p['path'])?$p['path']:'/rest/')
+            .(isset($p['action'])?$p['action']:'')
+            .(isset($p['protocol'])?$p['protocol']:'.json')
+            .(($method=='get')?'?'.http_build_query($params):'');
+        $curl->create($url);
+        $curl->option(CURLOPT_RETURNTRANSFER, true);
+        $curl->option(CURLOPT_SSL_VERIFYPEER, false);
+        $curl->option(CURLOPT_FOLLOWLOCATION, true);
+        $fp=fopen('../storage/logs/curl-err.'.date("Y-m-d").'.log', 'a');
+        $curl->option(CURLOPT_VERBOSE,1);
+        $curl->option(CURLOPT_STDERR,$fp);
+
+        if($method=='post')$curl->post($params);
+        $res = json_decode($curl->execute());
+        print_r($res);
+        echo "<br/>".$curl->error_code; // int
+        echo "<br/>".$curl->error_string;
+        // Information
+        print_r($curl->info); // array
+        return $res;
+    }
     /*
-    $test = isset($_REQUEST["test"]) ? $_REQUEST["test"] : "";
-        switch($test){
-            case 'user.current': // test: user info
 
-                $data = $this->call($_SESSION["query_data"]["domain"], "user.current", array(
-                    "auth" => $_SESSION["query_data"]["access_token"])
-                );
 
-            break;
-
-            case 'user.update': // test batch&files
-
-                $fileContent = file_get_contents(dirname(__FILE__)."/images/MM35_PG189a.jpg");
-
-                $batch = array(
-                    'user' => 'user.current',
-                    'user_update' => 'user.update?'
-                        .http_build_$this->query(array(
-                            'ID' => '$result[user][ID]',
-                            'PERSONAL_PHOTO' => array(
-                                'avatar.jpg',
-                                base64_encode($fileContent)
-                            )
-                        ))
-                );
-
-                $data = $this->call($_SESSION["query_data"]["domain"], "batch", array(
-                    "auth" => $_SESSION["query_data"]["access_token"],
-                    "cmd" => $batch,
-                ));
-
-            break;
 
             case 'event.bind': // bind event handler
 

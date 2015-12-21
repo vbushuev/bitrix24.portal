@@ -21,8 +21,11 @@
     @else
     <p>
         token:{{$access_token}}<br>
+        
     </p>
-    <a href="bitrix24/install">Установить Бизнес-процесс модуль</a><<br>
+    <a href="bitrix24/install">Установить Бизнес-процесс модуль</a><br>
+    <a href="bitrix24/userinfo">User info</a><br>
+    <a href="bitrix24/methods">List of methods</a><br>
     <!--<a id="install-bp" href="#">Установить Бизнес-процесс модуль</a><br>-->
     <hr>
     <a href="bitrix24/methods">List of methods</a><br>
