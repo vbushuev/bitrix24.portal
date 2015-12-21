@@ -12,6 +12,12 @@ use App\Http\Controllers\Controller;
 
 
 class Bitrix24Controller extends Controller{
+    protected $bxData = [
+        'domain' => 'oookbrenessans.bitrix24.ru',
+        'client_id' => 'local.5672afb9c59445.45097940',
+        'secret' => 'b13fe032dea328304189d5d5ceeef906',
+        'scope' => ['disk','crm','task','user','bizproc','im','log','mailservice','department']
+    ];
     public function getIndex(Request $rq){
         return view('bitrix24.index',$this->getBitrix24Data($rq));
     }
@@ -109,6 +115,7 @@ class Bitrix24Controller extends Controller{
                 'client_secret' => $bd['secret'],
                 'grant_type' => 'authorization_code',
                 'code' => $code,
+                //'scope' => $bd['scope'],
                 'redirect_uri' => urlencode($rq->url())
             ];
             $curl= new \Curl();
@@ -186,13 +193,7 @@ class Bitrix24Controller extends Controller{
         if($rq->session()->has('bitrix24Oauth')){
             return $rq->session()->get('bitrix24Oauth');
         }
-        $bd = [
-            'domain' => 'oookbrenessans.bitrix24.ru',
-            'client_id' => 'local.566973a3ec7410.58002193',
-            'secret' => '802232f8073927f1b07b812c4b9a4b3f',
-            'scope' => [] //['disk','crm','task','user','bizproc','im','log','mailservice','department']
-            //'scope' => ['bizproc']
-        ];
+        $bd = $this->bxData;
         $rq->session()->put('bitrix24Oauth',$bd);
         return $bd;
     }
