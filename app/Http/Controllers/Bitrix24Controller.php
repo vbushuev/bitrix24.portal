@@ -16,7 +16,7 @@ class Bitrix24Controller extends Controller{
         'domain' => 'oookbrenessans.bitrix24.ru',
         'client_id' => 'local.5672afb9c59445.45097940',
         'secret' => 'b13fe032dea328304189d5d5ceeef906',
-        'scope' => 'user,bizproc,crm,task,disk,im,log,mailservice,deparment'
+        'scope' => 'user,bizproc,crm'
     ];
     public function getIndex(Request $rq){
         return view('bitrix24.index',$this->getBitrix24Data($rq));
@@ -80,7 +80,6 @@ class Bitrix24Controller extends Controller{
         $refresh = $rq->input('refresh',false);
         $clear = $rq->input('clear',false);
         if($code!==false){
-
             $res = $this->callBX([
                 'action' => ''
                 ,'path' => '/oauth/token/'
@@ -104,34 +103,25 @@ class Bitrix24Controller extends Controller{
             $this->setBitrix24Data($rq,$bd);
         }
         else if($refresh!==false){
-            $params = [
-                'client_id' => $bd['client_id'],
-                'client_secret' => $bd['secret'],
-                'grant_type' => 'refresh_token',
-                'refresh_token' => $bd['refresh_token'],
-                'scope' => $bd['scope'],
-                'redirect_uri' => urlencode($rq->url())
-            ];
-            $curl= new \Curl();
-            $url = 'https://'.$bd['domain'].'/oauth/token/?'.http_build_query($params);
-            $curl->create($url);
-            $curl->option(CURLOPT_RETURNTRANSFER, true);
-            $curl->option(CURLOPT_SSL_VERIFYPEER, false);
-            $curl->option(CURLOPT_FOLLOWLOCATION, true);
-
-            $res = json_decode($curl->execute());
-            print_r($res);
-            echo "<br/>".$curl->error_code; // int
-            echo "<br/>".$curl->error_string;
-
-            // Information
-            print_r($curl->info); // array
+            $res = $this->callBX([
+                'action' => ''
+                ,'path' => '/oauth/token/'
+                ,'method' => 'get'
+                ,'protocol' => ''
+                ,'params' => [
+                    'client_id' => $bd['client_id'],
+                    'client_secret' => $bd['secret'],
+                    'grant_type' => 'refresh_token',
+                    'refresh_token' => $bd['refresh_token'],
+                    'scope' => $bd['scope'],
+                    'redirect_uri' => urlencode($rq->url())
+                ]
+            ],$rq);
             $bd['access_token'] = $res->access_token;
             $bd['expires_in'] = time()+$res->expires_in;
 			$bd['user_id'] = $res->user_id;
 			$bd['member_id'] = $res->member_id;
 			$bd['refresh_token'] = $res->refresh_token;
-
             $this->setBitrix24Data($rq,$bd);
         }
         else if($clear!==false){

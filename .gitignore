@@ -9,3 +9,5 @@ Homestead.json
 composer.lock
 
 composer.lock
+
+*.conf
