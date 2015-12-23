@@ -3,7 +3,9 @@
 @section('title', 'Bitrix24')
 
 @section('sidebar')
+    @parent
 
+    <p>This is appended to the master sidebar.</p>
 @endsection
 
 @section('content')
@@ -39,63 +41,4 @@
 
 @endsection
 @section('scripts')
-<script src="/js/bitrix24.js"></script>
-<script>
-BX24.init();
-$('#install-bp').on('click',function(e){
-    console.debug('Install bp called');
-    var params = {
-        'CODE': 'contur-focus',
-        'HANDLER': 'http://bitrix24.portal.bs2/contur-focus/test',
-        //'AUTH_USER_ID': 1,
-        //'USE_SUBSCRIPTION': 'Y',
-        'NAME':{
-            'ru': 'Проверка сервисом Контур-Фокус',
-            'en': 'Contur-Focus Legacity check'
-        },
-        'DESCRIPTION':{
-            'ru': 'Проверяет статусс юрлица',
-            'en': 'Lagacity check'
-        },
-         'PROPERTIES': {
-            'q': {
-               'Name': {
-                  'ru': 'Наименоваание организации',
-                  'en': 'Entity name'
-               },
-               'Description': {
-                  'ru': 'Введите Наименоваание организации',
-                  'en': 'Input Entity name'
-               },
-               'Type': 'string',
-               'Required': 'Y',
-               'Multiple': 'N',
-               'Default': '{=Document:NAME}'
-            }
-         },
-         'RETURN_PROPERTIES': {
-            'outputString': {
-               'Name': {
-                  'ru': 'MD5',
-                  'en': 'MD5'
-               },
-               'Type': 'string',
-               'Multiple': 'N',
-               'Default': null
-            }
-         },
-    };
-
-    BX24.callMethod(
-        'bizproc.activity.add',
-        params,
-        function(result){
-            if(result.error())
-                alert("Error: " + result.error());
-            else
-                alert("Success: " + result.data());
-        }
-    );
-});
-</script>
 @endsection

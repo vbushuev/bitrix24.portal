@@ -3,7 +3,7 @@
 @section('title', 'Welcome')
 
 @section('sidebar')
-
+    @parent
 @endsection
 
 @section('content')

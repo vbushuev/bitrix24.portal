@@ -1,12 +1,71 @@
+.sidebar {
+  width: 100%;
+  display: table;
+  height: 2em;
+  margin: 0;
+  font-size: 1.2em;
+  background-color: rgba(255,255,255,0.05);
+}
+.sidebar .row {
+  display: table-row;
+}
+.sidebar .row ul.nav {
+  padding: 0;
+  margin: 0;
+  list-style: none;
+  text-align: right;
+  display: table-cell;
+}
+.sidebar .row ul.nav li {
+  display: inline-block;
+  margin: 0.2em 0.6em;
+}
+.sidebar .row ul.nav li a {
+  color: #fff;
+  height: 2em;
+  line-height: 2em;
+  border-radius: 0.32em;
+  display: inline-block;
+  padding: 0 1em;
+  text-align: center;
+  font-weight: 100;
+}
+.sidebar .row ul.nav li a:active,
+.sidebar .row ul.nav li a.active {
+  border: solid 1px #fff;
+}
+.sidebar .row ul.nav li a:hover {
+  color: rgba(18,25,43,0.8);
+  background-color: rgba(255,255,255,0.8);
+}
+.sidebar .row ul.nav li.last {
+  margin: 0 2em;
+}
+.sidebar .row .logo {
+  display: table-cell;
+  text-align: left;
+  height: 2em;
+  line-height: 2em;
+}
+.sidebar .row .logo span {
+  margin-left: 2em;
+}
 .container {
   text-align: center;
-  display: table-cell;
+  display: table-row;
   vertical-align: middle;
 }
 .content {
   text-align: center;
-  display: inline-block;
+  display: table-cell;
 }
 .title {
   font-size: 4em;
+}
+.clickable {
+  cursor: pointer;
+  opacity: 0.8;
+}
+.clickable:hover {
+  opactity: 1;
 }

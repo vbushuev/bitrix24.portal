@@ -1,11 +1,56 @@
 //main: main.styl,out: styles.css
-
+.sidebar
+    width 100%
+    display table
+    height 2em
+    margin 0
+    font-size 1.2em;
+    background-color rgba(255,255,255,.05)
+    .row
+        display table-row
+        ul.nav
+            padding 0
+            margin 0
+            list-style none;
+            text-align right
+            display table-cell
+            li
+                display inline-block
+                margin .2em .6em
+                a
+                    color rgba(255,255,255,1)
+                    height 2em
+                    line-height 2em
+                    border-radius .32em
+                    display inline-block
+                    padding 0 1em
+                    text-align center
+                    font-weight 100
+                a:active,a.active
+                    border solid 1px #fff
+                a:hover
+                    color rgba(18,25,43,.8)
+                    background-color rgba(255,255,255,.8)
+            li.last
+                margin 0 2em
+        .logo
+            display table-cell
+            text-align left
+            height 2em
+            line-height 2em
+            span
+                margin-left 2em
 .container
     text-align center
-    display table-cell
+    display table-row
     vertical-align middle
 .content
     text-align center
-    display inline-block
+    display table-cell
 .title
     font-size 4em
+.clickable
+    cursor pointer
+    opacity .8
+.clickable:hover
+    opactity 1
