@@ -69,6 +69,60 @@ class Bitrix24Controller extends Controller{
              ]
         ],$rq);
     }
+    public function getLeadfields(Request $rq){
+        $rs = $this->callBX([
+            'action' => 'crm.lead.userfield.list',
+            'params' => [
+                'order' => [ 'SORT' => 'ASC' ]
+            ]
+        ],$rq);
+        foreach ($rs->result as $field) {
+            print_r($field);
+            echo '<br>';
+            /*
+            [result] => Array (
+                [0] => stdClass Object (
+                    [ID] => 152
+                    [ENTITY_ID] => CRM_LEAD
+                    [FIELD_NAME] => UF_CRM_1448526372
+                    [USER_TYPE_ID] => integer
+                    [XML_ID] =>
+                    [SORT] => 100
+                    [MULTIPLE] => N
+                    [MANDATORY] => N
+                    [SHOW_FILTER] => E
+                    [SHOW_IN_LIST] => Y
+                    [EDIT_IN_LIST] => Y
+                    [IS_SEARCHABLE] => N
+                    [SETTINGS] => stdClass Object ( [SIZE] => 20 [MIN_VALUE] => 0 [MAX_VALUE] => 0 [DEFAULT_VALUE] => )
+                )
+                [1] => stdClass Object ( [ID] => 166 [ENTITY_ID] => CRM_LEAD [FIELD_NAME] => UF_CRM_1450340090 [USER_TYPE_ID] => string [XML_ID] => [SORT] => 100 [MULTIPLE] => N [MANDATORY] => N [SHOW_FILTER] => E [SHOW_IN_LIST] => Y [EDIT_IN_LIST] => Y [IS_SEARCHABLE] => N [SETTINGS] => stdClass Object ( [SIZE] => 20 [ROWS] => 1 [REGEXP] => [MIN_LENGTH] => 0 [MAX_LENGTH] => 0 [DEFAULT_VALUE] => ) )
+                [2] => stdClass Object ( [ID] => 168 [ENTITY_ID] => CRM_LEAD [FIELD_NAME] => UF_CRM_1450769723 [USER_TYPE_ID] => enumeration [XML_ID] => [SORT] => 100 [MULTIPLE] => N [MANDATORY] => N [SHOW_FILTER] => N [SHOW_IN_LIST] => Y [EDIT_IN_LIST] => Y [IS_SEARCHABLE] => N [SETTINGS] => stdClass Object ( [DISPLAY] => CHECKBOX [LIST_HEIGHT] => 1 [CAPTION_NO_VALUE] => ) [LIST] => Array ( [0] => stdClass Object ( [ID] => 44 [SORT] => 10 [VALUE] => BG [DEF] => Y ) [1] => stdClass Object ( [ID] => 46 [SORT] => 20 [VALUE] => CDN [DEF] => N ) [2] => stdClass Object ( [ID] => 48 [SORT] => 30 [VALUE] => CDA [DEF] => N )
+                [3] => stdClass Object ( [ID] => 50 [SORT] => 40 [VALUE] => CD [DEF] => N ) [4] => stdClass Object ( [ID] => 52 [SORT] => 50 [VALUE] => DT [DEF] => N ) ) ) [3] => stdClass Object ( [ID] => 156 [ENTITY_ID] => CRM_LEAD [FIELD_NAME] => UF_CRM_1448534725 [USER_TYPE_ID] => string [XML_ID] => [SORT] => 200 [MULTIPLE] => N [MANDATORY] => N [SHOW_FILTER] => E [SHOW_IN_LIST] => Y [EDIT_IN_LIST] => Y [IS_SEARCHABLE] => N [SETTINGS] => stdClass Object ( [SIZE] => 20 [ROWS] => 1 [REGEXP] => [MIN_LENGTH] => 0 [MAX_LENGTH] => 0 [DEFAULT_VALUE] => BG ) ) ) [total] => 4
+            */
+        }
+    }
+    public function getLeadadd(Request $rq){
+        $rs = $this->callBX([
+            'action' => 'crm.lead.add',
+            'params' => [
+                'fields' => [
+                    'NAME' => $rq->input('NAME','NONAME'),
+                    'TITLE' => $rq->input('NAME','NONAME'),
+                    'SECOND_NAME' => '',
+                    'LAST_NAME' => '',
+                    'STATUS_ID' => 'NEW',
+                    'OPENED' => 'Y',
+                    'ASSIGNED_BY_ID' => '1',
+                    'CURRENCY_ID' => $rq->input('CURRENCY_ID','RUB'),
+                    'OPPORTUNITY' => $rq->input('OPPORTUNITY','0'),
+                    'PHONE' => $rq->input('PHONE','NOPHONE')
+                ],
+        		'params' =>  [ "REGISTER_SONET_EVENT" => "Y" ]
+            ]
+        ],$rq);
+        echo json_encode($rs);
+    }
     public function getMethods(Request $rq){
         $rs = $this->callBX([
             'action' => 'methods'
@@ -80,7 +134,7 @@ class Bitrix24Controller extends Controller{
         $refresh = $rq->input('refresh',false);
         $clear = $rq->input('clear',false);
         if($code!==false){
-            $res = $this->callBX([
+            $rs = $this->callBX([
                 'action' => ''
                 ,'path' => '/oauth/token/'
                 ,'method' => 'get'
@@ -94,12 +148,13 @@ class Bitrix24Controller extends Controller{
                     'redirect_uri' => urlencode($rq->url())
                 ]
             ],$rq);
-            $bd['access_token'] = $res->access_token;
-            $bd['expires_in'] = time()+$res->expires_in;
-		    $bd['user_id'] = $res->user_id;
-			$bd['status'] = $res->status;
-			$bd['member_id'] = $res->member_id;
-			$bd['refresh_token'] = $res->refresh_token;
+            print_r($rs);
+            $bd['access_token'] = $rs->access_token;
+            $bd['expires_in'] = time()+$rs->expires_in;
+		    $bd['user_id'] = $rs->user_id;
+			$bd['status'] = $rs->status;
+			$bd['member_id'] = $rs->member_id;
+			$bd['refresh_token'] = $rs->refresh_token;
             $this->setBitrix24Data($rq,$bd);
         }
         else if($refresh!==false){
@@ -160,8 +215,19 @@ class Bitrix24Controller extends Controller{
     }
     protected function callBX($p = [],Request $rq){
         $bd = $this->getBitrix24Data($rq);
+        if(!$this->isAuthenticated($bd)){
+            //getCode
+            $params = [
+                'client_id' => $bd['client_id'],
+                'response_type' => 'code',
+                'redirect_uri' => urlencode($rq->url())
+            ];
+            $url = 'https://'.$bd['domain'].'/oauth/authorize/?'.http_build_query($params);
+            //return Redirect::to($url);
+        }
         $method = isset($p['method'])?$p['method']:'post';
         $params = isset($p['params'])?$p['params']:[];
+        $debug =  isset($p['debug'])?$p['debug']:true;
         $params['auth'] = isset($params['auth'])?$params['auth']:(isset($bd['access_token'])?$bd['access_token']:'');
         $curl= new \Curl();
         $url = 'https://'
@@ -180,11 +246,14 @@ class Bitrix24Controller extends Controller{
 
         if($method=='post')$curl->post($params);
         $res = json_decode($curl->execute());
-        print_r($res);
-        echo "<br/>".$curl->error_code; // int
-        echo "<br/>".$curl->error_string;
-        // Information
-        print_r($curl->info); // array
+        if($debug){
+            echo "<strong>Result</strong>:<p>".json_encode($res)."</p>";
+            echo "<br><strong>Error code</strong>".$curl->error_code; // int
+            echo "<br><strong>Error string:</strong>".$curl->error_string;
+            echo "<br><strong>Curl info:</strong><p>";
+            print_r($curl->info); // array
+            echo "</p>";
+        }
         return $res;
     }
     /*
