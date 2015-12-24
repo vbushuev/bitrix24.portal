@@ -13,3 +13,5 @@ composer.lock
 *.conf
 
 .ftpconfig
+
+*.css

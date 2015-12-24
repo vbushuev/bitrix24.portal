@@ -5,7 +5,7 @@
     height 2em
     margin 0
     font-size 1.2em;
-    background-color rgba(255,255,255,.05)
+    //background-color rgba(255,255,255,.05)
     .row
         display table-row
         position relative
@@ -14,6 +14,9 @@
         margin 0
         .logo
             display inline-block
+            position absolute
+            left 0
+            top .4em
             line-height 2em
             width 160px
             span
@@ -24,7 +27,7 @@
             right 0
             top .4em
             a
-                color rgba(255,255,255,1)
+                color rgba(255,255,255,.7)
                 height 2em
                 line-height 2em
                 border-radius .32em
@@ -35,9 +38,11 @@
                 font-weight 100
             a.nav-item:active,a.nav-item.active
                 border solid 1px #fff
+                color rgba(255,255,255,1)
+            a:hover
+                color rgba(255,255,255,1)
             a.nav-item:hover
-                color rgba(18,25,43,.8)
-                background-color rgba(255,255,255,.8)
+                background-color rgba(255,255,255,.4)
 .container
     text-align center
     display table-row
