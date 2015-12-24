@@ -13,29 +13,20 @@
     </head>
     <body>
         <div class="sidebar">
-            @section('sidebar')
-                <div class="row">
-                    <div class="logo">
-                        <span>#logo place</span>
-                    </div>
-                    <ul class="nav">
-                        <li><a class="active" href="/">main</a></li>
-                        <li><a href="#">about</a></li>
-                        <li><a href="/bitrix24">bitrix24</a></li>
-                        <li><a href="/contur-focus">cfocus</a></li>
-                        <li><a href="#">contacts</a></li>
-                        <li class="last"><i class="fa fa-bars clickable"></i></li>
-                    </ul>
+            <div class="row">
+                <div class="logo">
+                    <span>#logo place</span>
                 </div>
-                <div class="row">
-                    <nav>
-                        <a class="active" href="/">main</a>
-                        <a href="/bitrix24">bitrix24</a>
-                        <a href="/contur-focus">cfocus</a>
-                    </nav>
-                </div>
-            @show
+                <nav>
+                    <a class="nav-item active" href="/">main</a>
+                    <a class="nav-item" href="/bitrix24">bitrix24</a>
+                    <a class="nav-item" href="/contur-focus">cfocus</a>
+                    <a href="#" id="nav-menu"><i class="fa fa-bars"></i></a>
+                </nav>
+            </div>
         </div>
+        @section('sidebar')
+        @show
         <div class="container">
             @yield('content')
         </div>

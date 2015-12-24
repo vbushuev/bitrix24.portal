@@ -8,38 +8,36 @@
     background-color rgba(255,255,255,.05)
     .row
         display table-row
-        ul.nav
-            padding 0
-            margin 0
-            list-style none;
-            text-align right
-            display table-cell
-            li
-                display inline-block
-                margin .2em .6em
-                a
-                    color rgba(255,255,255,1)
-                    height 2em
-                    line-height 2em
-                    border-radius .32em
-                    display inline-block
-                    padding 0 1em
-                    text-align center
-                    font-weight 100
-                a:active,a.active
-                    border solid 1px #fff
-                a:hover
-                    color rgba(18,25,43,.8)
-                    background-color rgba(255,255,255,.8)
-            li.last
-                margin 0 2em
+        position relative
+        height 2em
+        padding .4em 2em .4em 0
+        margin 0
         .logo
-            display table-cell
-            text-align left
-            height 2em
+            display inline-block
             line-height 2em
+            width 160px
             span
                 margin-left 2em
+        nav
+            display inline-block
+            position absolute
+            right 0
+            top .4em
+            a
+                color rgba(255,255,255,1)
+                height 2em
+                line-height 2em
+                border-radius .32em
+                display inline-block
+                padding 0 1em
+                margin 0 .6em
+                text-align center
+                font-weight 100
+            a.nav-item:active,a.nav-item.active
+                border solid 1px #fff
+            a.nav-item:hover
+                color rgba(18,25,43,.8)
+                background-color rgba(255,255,255,.8)
 .container
     text-align center
     display table-row
