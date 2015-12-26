@@ -1,9 +1,8 @@
 <?php
-//login renessbank
-//pass 7F:pkQWJ
-
 namespace App\Http\Controllers;
 
+//login renessbank
+//pass 7F:pkQWJ
 use Illuminate\Http\Request;
 
 use App\Http\Requests;
@@ -20,6 +19,35 @@ class Bitrix24Controller extends Controller{
     ];
     public function getIndex(Request $rq){
         return view('bitrix24.index',$this->getBitrix24Data($rq));
+    }
+    public function getCc(Request $rq){
+        return view('bitrix24.cc',$this->getBitrix24Data($rq));
+    }
+    public function postCc(Request $rq){
+        $fio = $rq->input('fio');
+        $fields = [
+            'NAME' => $fio['name'],
+            'TITLE' => $fio['name'],
+            'SOURCE_ID' => 'WEB',
+            'SECOND_NAME' => $fio['sur'],
+            'LAST_NAME' => $fio['last'],
+            'STATUS_ID' => 'NEW',
+            'OPENED' => 'Y',
+            'ASSIGNED_BY_ID' => '28',
+            'CURRENCY_ID' => $rq->input('CURRENCY_ID','RUB'),
+            'OPPORTUNITY' => $rq->input('amount','0'),
+            'PHONE' => $rq->input('phone','NOPHONE')
+        ];
+        //echo json_encode($fields); return;
+        $rs = $this->callBX([
+            'action' => 'crm.lead.add',
+            'params' => [
+                'fields' => $fields,
+        		'params' =>  [ "REGISTER_SONET_EVENT" => "Y" ]
+            ]
+        ],$rq);
+        echo json_encode($rs);
+        return view('bitrix24.cc',$this->getBitrix24Data($rq));
     }
     public function getInstall(Request $rq){
         $rs = $this->callBX([
@@ -69,7 +97,7 @@ class Bitrix24Controller extends Controller{
              ]
         ],$rq);
     }
-    public function getLeadfields(Request $rq){
+    public function getLeaduserfields(Request $rq){
         $rs = $this->callBX([
             'action' => 'crm.lead.userfield.list',
             'params' => [
@@ -100,6 +128,16 @@ class Bitrix24Controller extends Controller{
                 [2] => stdClass Object ( [ID] => 168 [ENTITY_ID] => CRM_LEAD [FIELD_NAME] => UF_CRM_1450769723 [USER_TYPE_ID] => enumeration [XML_ID] => [SORT] => 100 [MULTIPLE] => N [MANDATORY] => N [SHOW_FILTER] => N [SHOW_IN_LIST] => Y [EDIT_IN_LIST] => Y [IS_SEARCHABLE] => N [SETTINGS] => stdClass Object ( [DISPLAY] => CHECKBOX [LIST_HEIGHT] => 1 [CAPTION_NO_VALUE] => ) [LIST] => Array ( [0] => stdClass Object ( [ID] => 44 [SORT] => 10 [VALUE] => BG [DEF] => Y ) [1] => stdClass Object ( [ID] => 46 [SORT] => 20 [VALUE] => CDN [DEF] => N ) [2] => stdClass Object ( [ID] => 48 [SORT] => 30 [VALUE] => CDA [DEF] => N )
                 [3] => stdClass Object ( [ID] => 50 [SORT] => 40 [VALUE] => CD [DEF] => N ) [4] => stdClass Object ( [ID] => 52 [SORT] => 50 [VALUE] => DT [DEF] => N ) ) ) [3] => stdClass Object ( [ID] => 156 [ENTITY_ID] => CRM_LEAD [FIELD_NAME] => UF_CRM_1448534725 [USER_TYPE_ID] => string [XML_ID] => [SORT] => 200 [MULTIPLE] => N [MANDATORY] => N [SHOW_FILTER] => E [SHOW_IN_LIST] => Y [EDIT_IN_LIST] => Y [IS_SEARCHABLE] => N [SETTINGS] => stdClass Object ( [SIZE] => 20 [ROWS] => 1 [REGEXP] => [MIN_LENGTH] => 0 [MAX_LENGTH] => 0 [DEFAULT_VALUE] => BG ) ) ) [total] => 4
             */
+        }
+    }
+    public function getLeadfields(Request $rq){
+        $rs = $this->callBX([
+            'action' => 'crm.lead.fields',
+
+        ],$rq);
+        foreach ($rs->result as $field) {
+            print_r($field);
+            echo '<br>';
         }
     }
     public function getLeadadd(Request $rq){

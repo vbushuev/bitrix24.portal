@@ -25,11 +25,14 @@
         token:{{$access_token}}<br>
 
     </p>
+    <a href="bitrix24/cc">Заявка на кредитную карту</a><br>
+    <hr>
     <a href="bitrix24/install">Установить Бизнес-процесс модуль</a><br>
     <a href="bitrix24/userinfo">User info</a><br>
     <a href="bitrix24/methods">List of methods</a><br>
     <hr>
     <a href="bitrix24/leadfields">List of Lead's fields</a><br>
+    <a href="bitrix24/leaduserfields">List of Lead's user fields</a><br>
     <hr>
     <a href="bitrix24/methods">List of methods</a><br>
     <a href="?test=log.blogpost.add">Опубликовать запись в Живой Ленте</a><br>
