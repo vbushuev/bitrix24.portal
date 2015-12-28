@@ -1,5 +1,6 @@
 // main: main.styl, out: forms.css
 .form
+    display inline-block
     input,select,button
         height 2em
         line-height 2em
@@ -10,10 +11,22 @@
         width 12em
         padding 0 .4em
     button
-        width 6em
         height 2em
         line-height 2em
         border none
         color rgba(0,0,0,1)
         background-color rgb(148,185,220)
         cursor pointer
+    fieldset
+        border none
+        display block
+        text-align left
+        position relative
+        label
+            margin 0 1em
+            display block
+            float left
+        input,select,button
+            display block
+            float right
+            min-width 24em

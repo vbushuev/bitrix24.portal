@@ -11,12 +11,15 @@ use App\Http\Controllers\Controller;
 
 
 class Bitrix24Controller extends Controller{
-    protected $bxData = [
-        'domain' => 'oookbrenessans.bitrix24.ru',
-        'client_id' => 'local.5672afb9c59445.45097940',
-        'secret' => 'b13fe032dea328304189d5d5ceeef906',
-        'scope' => 'user,bizproc,crm'
-    ];
+    protected $bxData = [];
+    public function __construct(){
+        $this->bxData = [
+            'domain' => config('bitrix24.domain'),
+            'client_id' => config('bitrix24.client_id'),
+            'secret' => config('bitrix24.secret'),
+            'scope' => config('bitrix24.scope')
+        ];
+    }
     public function getIndex(Request $rq){
         return view('bitrix24.index',$this->getBitrix24Data($rq));
     }

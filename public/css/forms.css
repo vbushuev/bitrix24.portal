@@ -1,3 +1,6 @@
+.form {
+  display: inline-block;
+}
 .form input,
 .form select,
 .form button {
@@ -11,11 +14,28 @@
   padding: 0 0.4em;
 }
 .form button {
-  width: 6em;
   height: 2em;
   line-height: 2em;
   border: none;
   color: #000;
   background-color: #94b9dc;
   cursor: pointer;
+}
+.form fieldset {
+  border: none;
+  display: block;
+  text-align: left;
+  position: relative;
+}
+.form fieldset label {
+  margin: 0 1em;
+  display: block;
+  float: left;
+}
+.form fieldset input,
+.form fieldset select,
+.form fieldset button {
+  display: block;
+  float: right;
+  min-width: 24em;
 }

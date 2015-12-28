@@ -16,7 +16,8 @@
     <div class="form">
         <form method="get" action="bitrix24/oauth">
             {{ csrf_field() }}
-            <input type="text" name="portal" placeholder="Адрес портала" value="oookbrenessans.bitrix24.ru">
+            <!--<input type="text" name="portal" placeholder="Адрес портала" value="oookbrenessans.bitrix24.ru">-->
+            <input type="text" name="portal" placeholder="Адрес портала" value="{{ isset($domain) ? $domain : 'oookbrenessans.bitrix24.ru'}}">
             <button type="submit">oauth</button>
         </form>
     </div>

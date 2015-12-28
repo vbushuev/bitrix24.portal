@@ -5,6 +5,8 @@
     height 2em
     margin 0
     font-size 1.2em;
+    position relative
+    z-index 100
     //background-color rgba(255,255,255,.05)
     .row
         display table-row
@@ -47,6 +49,11 @@
     text-align center
     display table-row
     vertical-align middle
+    position relative
+    z-index 100
+    *
+        position relative
+        z-index 100
 .content
     text-align center
     display table-cell
@@ -57,3 +64,12 @@
     opacity .8
 .clickable:hover
     opactity 1
+.overlay
+    position fixed
+    top 0
+    left 0
+    width 100%
+    height 100%
+    display none
+    background-color rgba(255,255,255,.72)
+    z-index 1

@@ -12,6 +12,7 @@
         <link href="/css/components.css" rel="stylesheet" type="text/css">
     </head>
     <body>
+        <div class="overlay"></div>
         <div class="sidebar">
             <div class="row">
                 <div class="logo">
