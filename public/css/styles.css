@@ -25,11 +25,12 @@
 .sidebar .row .logo span {
   margin-left: 2em;
 }
-.sidebar .row .logo span a.logo {
+.sidebar .row .logo span a {
   background: url("img/logo.png") no-repeat fixed center;
   display: inline-block;
   width: 2em;
   height: 2em;
+  color: #fff;
 }
 .sidebar .row nav {
   display: inline-block;

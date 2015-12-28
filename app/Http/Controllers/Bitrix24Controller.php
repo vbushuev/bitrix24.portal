@@ -26,6 +26,7 @@ class Bitrix24Controller extends Controller{
     public function getCc(Request $rq){
         return view('bitrix24.cc',$this->getBitrix24Data($rq));
     }
+    public function postEvent(Request $rq){}
     public function getEvents(Request $rq){
         $rs = $this->callBX([
             'action' => 'events'
@@ -33,6 +34,21 @@ class Bitrix24Controller extends Controller{
         $vd = [
             'session' => $this->getBitrix24Data($rq),
             'data' => $rs
+        ];
+        return view('bitrix24.events',$vd);
+    }
+    public function getBindevent(Request $rq){
+        $vd = [
+            'session' => $this->getBitrix24Data($rq),
+            'data' => $this->callBX([
+                'action' => 'event.bind',
+                //'debug' => true,
+                'method' => 'get',
+                'params' => [
+                    'event' => $rq->input('event')
+                    ,'handler' => $rq->root().'/event?event='.$rq->input('event')
+                ]
+            ],$rq)
         ];
         return view('bitrix24.events',$vd);
     }
@@ -278,8 +294,10 @@ class Bitrix24Controller extends Controller{
         }
         $method = isset($p['method'])?$p['method']:'post';
         $params = isset($p['params'])?$p['params']:[];
-        $debug =  isset($p['debug'])?$p['debug']:true;
-        $params['auth'] = isset($params['auth'])?$params['auth']:(isset($bd['access_token'])?$bd['access_token']:'');
+        $debug =  isset($p['debug'])?$p['debug']:false;
+        if(isset($bd['access_token'])){
+            $params['auth'] = $bd['access_token'];
+        }
         $curl= new \Curl();
         $url = 'https://'
             .(isset($p['domain'])?$p['domain']:$bd['domain'])
@@ -307,49 +325,4 @@ class Bitrix24Controller extends Controller{
         }
         return $res;
     }
-    /*
-
-
-
-            case 'event.bind': // bind event handler
-
-                $data = $this->call($_SESSION["query_data"]["domain"], "event.bind", array(
-                    "auth" => $_SESSION["query_data"]["access_token"],
-                    "EVENT" => "ONCRMLEADADD",
-                    "HANDLER" =>$this->options['EVENT_HANDLER'],
-                ));
-
-            break;
-
-            case 'log.blogpost.add': // add livefeed entry
-
-                $fileContent = file_get_contents(dirname(__FILE__)."/images/MM35_PG189a.jpg");
-
-                $data = $this->call($_SESSION["query_data"]["domain"], "log.blogpost.add", array(
-                    "auth" => $_SESSION["query_data"]["access_token"],
-                    "POST_TITLE" => "Hello world!",
-                    "POST_MESSAGE" => "Goodbye, cruel world :-(",
-                    "FILES" => array(
-                        array(
-                            'minotaur.jpg',
-                            base64_encode($fileContent)
-                        )
-                    ),
-
-                ));
-
-            break;
-
-
-            default:
-
-                $data = $_SESSION["query_data"];
-
-            break;
-        }
-
-        echo '<pre>'; var_export($data); echo '</pre>';
-
-
-    */
 }

@@ -16,7 +16,8 @@
         <div class="sidebar">
             <div class="row">
                 <div class="logo">
-                    <span><a href="/"><img src="/css/img/logo.png" height="40px"></a></span>
+                    <!--<span><a href="/"><img src="/css/img/logo.png" height="40px"></a></span>-->
+                    <span><a href="/"><i class="fa fa-credit-card-alt"></i></a></span>
 
                 </div>
                 <nav>
