@@ -26,6 +26,16 @@ class Bitrix24Controller extends Controller{
     public function getCc(Request $rq){
         return view('bitrix24.cc',$this->getBitrix24Data($rq));
     }
+    public function getEvents(Request $rq){
+        $rs = $this->callBX([
+            'action' => 'events'
+        ],$rq);
+        $vd = [
+            'session' => $this->getBitrix24Data($rq),
+            'data' => $rs
+        ];
+        return view('bitrix24.events',$vd);
+    }
     public function postCc(Request $rq){
         $fio = $rq->input('fio');
         $fields = [

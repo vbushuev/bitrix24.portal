@@ -13,7 +13,7 @@ body {
   padding: 0;
   width: 100%;
   display: table;
-  background: rgba(255,255,255,0.6) url("img/background-tree.png") no-repeat fixed center;
+  background: rgba(255,255,255,0.6) url("img/background-cloud.jpg") no-repeat fixed center;
   background-size: cover;
   color: #fff;
   z-index: 0;

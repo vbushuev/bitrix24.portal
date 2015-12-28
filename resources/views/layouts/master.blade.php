@@ -16,7 +16,8 @@
         <div class="sidebar">
             <div class="row">
                 <div class="logo">
-                    <span>#logo place</span>
+                    <span><a href="/"><img src="/css/img/logo.png" height="40px"></a></span>
+
                 </div>
                 <nav>
                     <a class="nav-item active" href="/">main</a>
