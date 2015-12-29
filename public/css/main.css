@@ -13,9 +13,8 @@ body {
   padding: 0;
   width: 100%;
   display: table;
-  background: rgba(255,255,255,0.6) url("img/background-cloud.jpg") no-repeat fixed center;
-  background-size: cover;
-  color: #fff;
+  background: rgba(255,255,255,0.6) url("img/cloud-rain.svg") no-repeat fixed left;
+  color: #000;
   z-index: 0;
   position: relative;
 }
@@ -26,4 +25,8 @@ a {
 }
 a:hover {
   color: #4285f4;
+}
+hr {
+  color: rgba(0,0,0,0.4);
+  margin: 0.2em 35% 1em 35%;
 }

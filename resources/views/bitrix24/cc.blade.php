@@ -19,6 +19,10 @@
             <button type="submit">oauth</button>
         </form>
     </div>
+    @elseif(isset($data->result))
+        <div class="content">
+            Заявка создана ID - <strong>{{$data->result}}</strong>
+        </div>
     @else
     <div class="form">
         <form method="post" action="/bitrix24/cc">
@@ -27,6 +31,7 @@
             <fieldset><label for="fio[name]">Имя</label><input type="text" name="fio[name]" placeholder="Имя" value="Виталий"></fieldset>
             <fieldset><label for="fio[sur]">Отчество</label><input type="text" name="fio[sur]" placeholder="Отчество" value="Лукьянович"></fieldset>
             <fieldset><label for="phone">Номер мобильного</label><input type="tel" name="phone[0][VALUE]" placeholder="Номер мобильного" value="+79265766710"></fieldset>
+            <fieldset><label for="passport">Паспорт</label><input type="file" name="passport" placeholder="Скан паспорта"></fieldset>
             <input type="hidden" name="phone[0][VALUE_TYPE]" value="WORK">
             <fieldset><label for="amount">Кредитный лимит</label><input type="number" name="amount" placeholder="Кредитный лимит" value="100000"></fieldset>
             <input type="hidden" name="request_type" value="CC">

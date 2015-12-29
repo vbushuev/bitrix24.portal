@@ -10,6 +10,7 @@
         <link href="/css/styles.css" rel="stylesheet" type="text/css">
         <link href="/css/forms.css" rel="stylesheet" type="text/css">
         <link href="/css/components.css" rel="stylesheet" type="text/css">
+        <link href="/css/svg.css" rel="stylesheet" type="text/css">
     </head>
     <body>
         <div class="overlay"></div>

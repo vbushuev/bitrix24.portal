@@ -2,12 +2,12 @@
 .sidebar
     width 100%
     display table
-    height 2em
+    height 3em
     margin 0
     font-size 1.2em;
     position relative
     z-index 100
-    //background-color rgba(255,255,255,.05)
+    background-color rgba(0,0,120,.5)
     .row
         display table-row
         position relative
@@ -62,7 +62,17 @@
         z-index 100
 .content
     text-align center
-    display table-cell
+    //display table-cell
+    table
+        display inline-block
+        tr th
+            font-weight 400
+            padding .2em
+            min-width 6.4em
+            text-align right
+        tr td
+            padding .2em
+            text-align right
 .title
     font-size 4em
 .clickable

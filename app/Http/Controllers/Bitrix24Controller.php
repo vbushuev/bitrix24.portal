@@ -40,7 +40,8 @@ class Bitrix24Controller extends Controller{
     public function getEvents(Request $rq){
         $vd = [
             'session' => $this->getBitrix24Data($rq),
-            'data' => $this->callBX(['action' => 'events'],$rq)
+            'data' => $this->callBX([
+                'action' => 'events'],$rq)
         ];
         if(!$this->isAuthenticated($vd['session']))return $this->redirectOAuth($rq);
         return view('bitrix24.events',$vd);
@@ -62,6 +63,7 @@ class Bitrix24Controller extends Controller{
     }
     public function postCc(Request $rq){
         $fio = $rq->input('fio');
+        $scan = $rq->input('passport');
         $fields = [
             'NAME' => $fio['name'],
             'TITLE' => $fio['name'],
@@ -73,18 +75,22 @@ class Bitrix24Controller extends Controller{
             'ASSIGNED_BY_ID' => '28',
             'CURRENCY_ID' => $rq->input('CURRENCY_ID','RUB'),
             'OPPORTUNITY' => $rq->input('amount','0'),
-            'PHONE' => $rq->input('phone','NOPHONE')
+            'PHONE' => $rq->input('phone','NOPHONE'),
+            'UF_CRM_1451053103' => $scan,
+            'UF_CRM_1450769723' => 'CC',
+            'UF_CRM_1448534725' => 'Кредитная карта'
         ];
-        //echo json_encode($fields); return;
-        $rs = $this->callBX([
-            'action' => 'crm.lead.add',
-            'params' => [
-                'fields' => $fields,
-        		'params' =>  [ "REGISTER_SONET_EVENT" => "Y" ]
-            ]
-        ],$rq);
-        echo json_encode($rs);
-        return view('bitrix24.cc',$this->getBitrix24Data($rq));
+        $vd = [
+            'session' => $this->getBitrix24Data($rq),
+            'data' => $this->callBX([
+                'action' => 'crm.lead.add',
+                'params' => [
+                    'fields' => $fields,
+            		'params' =>  [ "REGISTER_SONET_EVENT" => "Y" ]
+                ]
+            ],$rq)
+        ];
+        return view('bitrix24.cc',$vd);
     }
     public function getInstall(Request $rq){
         $rs = $this->callBX([
@@ -135,37 +141,18 @@ class Bitrix24Controller extends Controller{
         ],$rq);
     }
     public function getLeaduserfields(Request $rq){
-        $rs = $this->callBX([
-            'action' => 'crm.lead.userfield.list',
-            'params' => [
-                'order' => [ 'SORT' => 'ASC' ]
-            ]
-        ],$rq);
-        foreach ($rs->result as $field) {
-            print_r($field);
-            echo '<br>';
-            /*
-            [result] => Array (
-                [0] => stdClass Object (
-                    [ID] => 152
-                    [ENTITY_ID] => CRM_LEAD
-                    [FIELD_NAME] => UF_CRM_1448526372
-                    [USER_TYPE_ID] => integer
-                    [XML_ID] =>
-                    [SORT] => 100
-                    [MULTIPLE] => N
-                    [MANDATORY] => N
-                    [SHOW_FILTER] => E
-                    [SHOW_IN_LIST] => Y
-                    [EDIT_IN_LIST] => Y
-                    [IS_SEARCHABLE] => N
-                    [SETTINGS] => stdClass Object ( [SIZE] => 20 [MIN_VALUE] => 0 [MAX_VALUE] => 0 [DEFAULT_VALUE] => )
-                )
-                [1] => stdClass Object ( [ID] => 166 [ENTITY_ID] => CRM_LEAD [FIELD_NAME] => UF_CRM_1450340090 [USER_TYPE_ID] => string [XML_ID] => [SORT] => 100 [MULTIPLE] => N [MANDATORY] => N [SHOW_FILTER] => E [SHOW_IN_LIST] => Y [EDIT_IN_LIST] => Y [IS_SEARCHABLE] => N [SETTINGS] => stdClass Object ( [SIZE] => 20 [ROWS] => 1 [REGEXP] => [MIN_LENGTH] => 0 [MAX_LENGTH] => 0 [DEFAULT_VALUE] => ) )
-                [2] => stdClass Object ( [ID] => 168 [ENTITY_ID] => CRM_LEAD [FIELD_NAME] => UF_CRM_1450769723 [USER_TYPE_ID] => enumeration [XML_ID] => [SORT] => 100 [MULTIPLE] => N [MANDATORY] => N [SHOW_FILTER] => N [SHOW_IN_LIST] => Y [EDIT_IN_LIST] => Y [IS_SEARCHABLE] => N [SETTINGS] => stdClass Object ( [DISPLAY] => CHECKBOX [LIST_HEIGHT] => 1 [CAPTION_NO_VALUE] => ) [LIST] => Array ( [0] => stdClass Object ( [ID] => 44 [SORT] => 10 [VALUE] => BG [DEF] => Y ) [1] => stdClass Object ( [ID] => 46 [SORT] => 20 [VALUE] => CDN [DEF] => N ) [2] => stdClass Object ( [ID] => 48 [SORT] => 30 [VALUE] => CDA [DEF] => N )
-                [3] => stdClass Object ( [ID] => 50 [SORT] => 40 [VALUE] => CD [DEF] => N ) [4] => stdClass Object ( [ID] => 52 [SORT] => 50 [VALUE] => DT [DEF] => N ) ) ) [3] => stdClass Object ( [ID] => 156 [ENTITY_ID] => CRM_LEAD [FIELD_NAME] => UF_CRM_1448534725 [USER_TYPE_ID] => string [XML_ID] => [SORT] => 200 [MULTIPLE] => N [MANDATORY] => N [SHOW_FILTER] => E [SHOW_IN_LIST] => Y [EDIT_IN_LIST] => Y [IS_SEARCHABLE] => N [SETTINGS] => stdClass Object ( [SIZE] => 20 [ROWS] => 1 [REGEXP] => [MIN_LENGTH] => 0 [MAX_LENGTH] => 0 [DEFAULT_VALUE] => BG ) ) ) [total] => 4
-            */
-        }
+        $vd = [
+            'session' => $this->getBitrix24Data($rq),
+            'type' => 'userfields',
+            'data' => $this->callBX([
+                    'action' => 'crm.lead.userfield.list',
+                    'params' => [
+                        'order' => [ 'SORT' => 'ASC' ]
+                    ]
+                ],$rq)
+        ];
+        if(!$this->isAuthenticated($vd['session']))return $this->redirectOAuth($rq);
+        return view('bitrix24.common',$vd);
     }
     public function getLeadfields(Request $rq){
         $rs = $this->callBX([
