@@ -11,7 +11,7 @@
         Заявка на  кредитную карту<sup>demo</sup>
     </div>
 
-    @if(!isset($access_token))
+    @if(!isset($session['access_token']))
     <div class="form">
         <form method="get" action="/bitrix24/oauth">
             {{ csrf_field() }}

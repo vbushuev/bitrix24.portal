@@ -21,20 +21,28 @@ class Bitrix24Controller extends Controller{
         ];
     }
     public function getIndex(Request $rq){
-        return view('bitrix24.index',$this->getBitrix24Data($rq));
+        $vd = [
+            'session' => $this->getBitrix24Data($rq),
+            'data' => []
+        ];
+        if(!$this->isAuthenticated($vd['session']))return $this->redirectOAuth($rq);
+        return view('bitrix24.index',$vd);
     }
     public function getCc(Request $rq){
-        return view('bitrix24.cc',$this->getBitrix24Data($rq));
+        $vd = [
+            'session' => $this->getBitrix24Data($rq),
+            'data' => []
+        ];
+        if(!$this->isAuthenticated($vd['session']))return $this->redirectOAuth($rq);
+        return view('bitrix24.cc',$vd);
     }
     public function postEvent(Request $rq){}
     public function getEvents(Request $rq){
-        $rs = $this->callBX([
-            'action' => 'events'
-        ],$rq);
         $vd = [
             'session' => $this->getBitrix24Data($rq),
-            'data' => $rs
+            'data' => $this->callBX(['action' => 'events'],$rq)
         ];
+        if(!$this->isAuthenticated($vd['session']))return $this->redirectOAuth($rq);
         return view('bitrix24.events',$vd);
     }
     public function getBindevent(Request $rq){
@@ -249,16 +257,7 @@ class Bitrix24Controller extends Controller{
         else if($clear!==false){
             $rq->session()->flush();
         }
-        else if(!$this->isAuthenticated($bd)){
-            //getCode
-            $params = [
-                'client_id' => $bd['client_id'],
-                'response_type' => 'code',
-                'redirect_uri' => urlencode($rq->url())
-            ];
-            $url = 'https://'.$bd['domain'].'/oauth/authorize/?'.http_build_query($params);
-            return Redirect::to($url);
-        }
+        else if(!$this->isAuthenticated($bd)) return $this->redirectOAuth($rq);
         return Redirect::to('/bitrix24');
     }
     public function getUserinfo(Request $rq){
@@ -269,11 +268,23 @@ class Bitrix24Controller extends Controller{
     protected function isAuthenticated($bd){
         return isset($bd['access_token'])&&!empty($bd['access_token']);
     }
+    protected function redirectOAuth(Request $rq){
+        $bd = $this->getBitrix24Data($rq);
+        $params = [
+            'client_id' => $bd['client_id'],
+            'response_type' => 'code',
+            'redirect_uri' => urlencode($rq->url())
+        ];
+        $url = 'https://'.$bd['domain'].'/oauth/authorize/?'.http_build_query($params);
+        return Redirect::to($url);
+    }
     protected function getBitrix24Data(Request $rq){
-        if($rq->session()->has('bitrix24Oauth')){
-            return $rq->session()->get('bitrix24Oauth');
+        $bd = ($rq->session()->has('bitrix24Oauth'))
+            ? $rq->session()->get('bitrix24Oauth')
+            : $this->bxData;
+        if(isset($bd['expires_in']) && time() >= $bd['expires_in'] ){ //expired
+            $bd['access_token'] = '';
         }
-        $bd = $this->bxData;
         $rq->session()->put('bitrix24Oauth',$bd);
         return $bd;
     }
@@ -282,22 +293,10 @@ class Bitrix24Controller extends Controller{
     }
     protected function callBX($p = [],Request $rq){
         $bd = $this->getBitrix24Data($rq);
-        if(!$this->isAuthenticated($bd)){
-            //getCode
-            $params = [
-                'client_id' => $bd['client_id'],
-                'response_type' => 'code',
-                'redirect_uri' => urlencode($rq->url())
-            ];
-            $url = 'https://'.$bd['domain'].'/oauth/authorize/?'.http_build_query($params);
-            //return Redirect::to($url);
-        }
         $method = isset($p['method'])?$p['method']:'post';
         $params = isset($p['params'])?$p['params']:[];
         $debug =  isset($p['debug'])?$p['debug']:false;
-        if(isset($bd['access_token'])){
-            $params['auth'] = $bd['access_token'];
-        }
+        if($this->isAuthenticated($bd)) $params['auth'] = $bd['access_token'];
         $curl= new \Curl();
         $url = 'https://'
             .(isset($p['domain'])?$p['domain']:$bd['domain'])
