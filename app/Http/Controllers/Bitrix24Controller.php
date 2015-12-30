@@ -256,6 +256,9 @@ class Bitrix24Controller extends Controller{
             'action' => 'user.current'
         ],$rq);
     }
+    public function postBlacklist(Request $rq){
+        file_put_contents('../storage/logs/blacklist.request.log',date('Y-m-d h:i:s').': request['.join($rq->all(),';').']\n',FILE_APPEND);
+    }
     protected function isAuthenticated($bd){
         return isset($bd['access_token'])&&!empty($bd['access_token']);
     }
