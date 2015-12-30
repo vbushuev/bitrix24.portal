@@ -1,13 +1,13 @@
 //main: main.styl,out: styles.css
 .sidebar
     width 100%
-    display table
+    display block
     height 3em
     margin 0
     font-size 1.2em;
-    position relative
-    z-index 100
-    background-color rgba(0,0,120,.5)
+    position fixed
+    z-index 200
+    background-color rgba(140,140,230,1)
     .row
         display table-row
         position relative
@@ -53,33 +53,42 @@
                 background-color rgba(255,255,255,.4)
 .container
     text-align center
-    display table-row
+    display table-cell
     vertical-align middle
     position relative
     z-index 100
+    padding 3.8em 0 1.8em 0
     *
         position relative
         z-index 100
-.content
+    .title
+        font-size 4em
+        margin 0 0 1em 0
+    .content
+        text-align center
+        table
+            display inline-block
+            tr th
+                font-weight 400
+                padding .2em
+                min-width 6.4em
+                text-align right
+            tr td
+                padding .2em
+                text-align right
+.footer
+    width 100%
+    display block
+    margin 0
+    font-size .8em;
+    height 1.6em;
+    position fixed
+    padding .2em
+    bottom 0
+    z-index 200
+    background-color rgba(160,160,200,.8)
+    color rgba(255,255,255,.8)
     text-align center
-    //display table-cell
-    table
-        display inline-block
-        tr th
-            font-weight 400
-            padding .2em
-            min-width 6.4em
-            text-align right
-        tr td
-            padding .2em
-            text-align right
-.title
-    font-size 4em
-.clickable
-    cursor pointer
-    opacity .8
-.clickable:hover
-    opactity 1
 .overlay
     position fixed
     top 0

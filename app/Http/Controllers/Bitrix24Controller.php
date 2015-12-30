@@ -63,7 +63,8 @@ class Bitrix24Controller extends Controller{
     }
     public function postCc(Request $rq){
         $fio = $rq->input('fio');
-        $scan = $rq->input('passport');
+        $scan = $rq->file('passport')->move('../storage/logs/');
+        $uploadFile = '@'.$scan->getRealPath().'/'.$scan->getFilename();
         $fields = [
             'NAME' => $fio['name'],
             'TITLE' => $fio['name'],
@@ -76,12 +77,13 @@ class Bitrix24Controller extends Controller{
             'CURRENCY_ID' => $rq->input('CURRENCY_ID','RUB'),
             'OPPORTUNITY' => $rq->input('amount','0'),
             'PHONE' => $rq->input('phone','NOPHONE'),
-            'UF_CRM_1451053103' => $scan,
+            'UF_CRM_1451053103' => $uploadFile,
             'UF_CRM_1450769723' => 'CC',
             'UF_CRM_1448534725' => 'Кредитная карта'
         ];
         $vd = [
             'session' => $this->getBitrix24Data($rq),
+            'debug' => "File path: [".($rq->hasFile('passport')?$uploadFile:'nofile uploaded')."]",
             'data' => $this->callBX([
                 'action' => 'crm.lead.add',
                 'params' => [
@@ -90,6 +92,7 @@ class Bitrix24Controller extends Controller{
                 ]
             ],$rq)
         ];
+        unlink($scan);
         return view('bitrix24.cc',$vd);
     }
     public function getInstall(Request $rq){
@@ -155,14 +158,13 @@ class Bitrix24Controller extends Controller{
         return view('bitrix24.common',$vd);
     }
     public function getLeadfields(Request $rq){
-        $rs = $this->callBX([
-            'action' => 'crm.lead.fields',
-
-        ],$rq);
-        foreach ($rs->result as $field) {
-            print_r($field);
-            echo '<br>';
-        }
+        $vd = [
+            'session' => $this->getBitrix24Data($rq),
+            'type' => 'fields',
+            'data' => $this->callBX( [ 'action' => 'crm.lead.fields' ], $rq )
+        ];
+        if(!$this->isAuthenticated($vd['session']))return $this->redirectOAuth($rq);
+        return view('bitrix24.common',$vd);
     }
     public function getLeadadd(Request $rq){
         $rs = $this->callBX([
@@ -195,6 +197,7 @@ class Bitrix24Controller extends Controller{
         $code = $rq->input('code',false);
         $refresh = $rq->input('refresh',false);
         $clear = $rq->input('clear',false);
+
         if($code!==false){
             $rs = $this->callBX([
                 'action' => ''
@@ -218,6 +221,7 @@ class Bitrix24Controller extends Controller{
 			$bd['member_id'] = $rs->member_id;
 			$bd['refresh_token'] = $rs->refresh_token;
             $this->setBitrix24Data($rq,$bd);
+            Redirect::to($bd['current']['url']);
         }
         else if($refresh!==false){
             $res = $this->callBX([
@@ -272,6 +276,7 @@ class Bitrix24Controller extends Controller{
         if(isset($bd['expires_in']) && time() >= $bd['expires_in'] ){ //expired
             $bd['access_token'] = '';
         }
+        $bd['current']['url'] = (!$rq->is('oauth/*'))?$rq->fullUrl():'/bitrix24';
         $rq->session()->put('bitrix24Oauth',$bd);
         return $bd;
     }

@@ -13,7 +13,6 @@
         <link href="/css/svg.css" rel="stylesheet" type="text/css">
     </head>
     <body>
-        <div class="overlay"></div>
         <div class="sidebar">
             <div class="row">
                 <div class="logo">
@@ -34,6 +33,10 @@
         <div class="container">
             @yield('content')
         </div>
+        <div class="footer">
+            &copy; Vladimir Bushuev 2015
+        </div>
+        <div class="overlay"></div>
         <script src="//code.jquery.com/jquery-2.1.4.min.js"></script>
         <script src="/js/vsb.js"></script>
         @yield('scripts')

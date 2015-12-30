@@ -23,13 +23,27 @@
     <div class="content">
         <table>
             <tr><th>ID</th><th>ENTITY_ID</th><th>FIELD_NAME</th><th>USER_TYPE_ID</th><th>MULTIPLE</th></tr>
-        @foreach ($data->result as $field)
+        @foreach ($data->result as $n => $field)
             <tr>
-                <td>{{$field->ID}}</td>
+                <td>{{$n}}-{{$field->ID}}</td>
                 <td>{{$field->ENTITY_ID}}</td>
                 <td>{{$field->FIELD_NAME}}</td>
                 <td>{{$field->USER_TYPE_ID}}</td>
                 <td>{{$field->MULTIPLE}}</td>
+            </tr>
+        @endforeach
+        </table>
+    </div>
+    @elseif($type=="fields")
+    <div class="content">
+        <table>
+            <tr><th>ID</th><th>listLabel</th><th>type</th><th>isMultiple</th></tr>
+        @foreach ($data->result as $n => $field)
+            <tr>
+                <td>{{$n}}</td>
+                <td>{{ isset($field->listLabel)?$field->listLabel:'no label' }}</td>
+                <td>{{$field->type}}</td>
+                <td>{{($field->isMultiple) ? 'Y' : 'N'}}</td>
             </tr>
         @endforeach
         </table>

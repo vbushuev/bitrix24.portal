@@ -10,7 +10,10 @@
     <div class="title">
         Заявка на  кредитную карту<sup>demo</sup>
     </div>
-
+    <div class="content"><code>
+        <strong>debug</strong>
+        {{isset($debug) ? $debug: ''}}
+    </code></div>
     @if(!isset($session['access_token']))
     <div class="form">
         <form method="get" action="/bitrix24/oauth">
@@ -25,7 +28,7 @@
         </div>
     @else
     <div class="form">
-        <form method="post" action="/bitrix24/cc">
+        <form method="post" action="/bitrix24/cc" enctype="multipart/form-data">
             {{ csrf_field() }}
             <fieldset><label for="fio[last]">Фамилия</label><input type="text" name="fio[last]" placeholder="Фамилия" value="Пупкин"></fieldset>
             <fieldset><label for="fio[name]">Имя</label><input type="text" name="fio[name]" placeholder="Имя" value="Виталий"></fieldset>

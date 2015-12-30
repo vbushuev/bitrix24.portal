@@ -1,12 +1,12 @@
 .sidebar {
   width: 100%;
-  display: table;
+  display: block;
   height: 3em;
   margin: 0;
   font-size: 1.2em;
-  position: relative;
-  z-index: 100;
-  background-color: rgba(0,0,120,0.5);
+  position: fixed;
+  z-index: 200;
+  background-color: #8c8ce6;
 }
 .sidebar .row {
   display: table-row;
@@ -63,40 +63,49 @@
 }
 .container {
   text-align: center;
-  display: table-row;
+  display: table-cell;
   vertical-align: middle;
   position: relative;
   z-index: 100;
+  padding: 3.8em 0 1.8em 0;
 }
 .container * {
   position: relative;
   z-index: 100;
 }
-.content {
+.container .title {
+  font-size: 4em;
+  margin: 0 0 1em 0;
+}
+.container .content {
   text-align: center;
 }
-.content table {
+.container .content table {
   display: inline-block;
 }
-.content table tr th {
+.container .content table tr th {
   font-weight: 400;
   padding: 0.2em;
   min-width: 6.4em;
   text-align: right;
 }
-.content table tr td {
+.container .content table tr td {
   padding: 0.2em;
   text-align: right;
 }
-.title {
-  font-size: 4em;
-}
-.clickable {
-  cursor: pointer;
-  opacity: 0.8;
-}
-.clickable:hover {
-  opactity: 1;
+.footer {
+  width: 100%;
+  display: block;
+  margin: 0;
+  font-size: 0.8em;
+  height: 1.6em;
+  position: fixed;
+  padding: 0.2em;
+  bottom: 0;
+  z-index: 200;
+  background-color: rgba(160,160,200,0.8);
+  color: rgba(255,255,255,0.8);
+  text-align: center;
 }
 .overlay {
   position: fixed;
