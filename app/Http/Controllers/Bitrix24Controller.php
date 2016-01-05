@@ -63,8 +63,14 @@ class Bitrix24Controller extends Controller{
     }
     public function postCc(Request $rq){
         $fio = $rq->input('fio');
-        $scan = $rq->file('passport')->move('../storage/logs/');
-        $uploadFile = '@'.$scan->getRealPath().'/'.$scan->getFilename();
+        $uploadFile = [];
+        if($rq->hasFile('passport')){
+            $scan = $rq->file('passport')->move('../storage/logs/');
+            $uploadFile = [
+                $scan->getFilename(),
+                base64_encode(file_get_contents($scan))
+            ];
+        }
         $fields = [
             'NAME' => $fio['name'],
             'TITLE' => $fio['name'],
@@ -83,7 +89,7 @@ class Bitrix24Controller extends Controller{
         ];
         $vd = [
             'session' => $this->getBitrix24Data($rq),
-            'debug' => "File path: [".($rq->hasFile('passport')?$uploadFile:'nofile uploaded')."]",
+            'debug' => "File path: [".($rq->hasFile('passport')?$uploadFile[1]:'nofile uploaded')."]",
             'data' => $this->callBX([
                 'action' => 'crm.lead.add',
                 'params' => [
@@ -92,7 +98,7 @@ class Bitrix24Controller extends Controller{
                 ]
             ],$rq)
         ];
-        unlink($scan);
+        //unlink($scan);
         return view('bitrix24.cc',$vd);
     }
     public function getInstall(Request $rq){
