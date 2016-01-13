@@ -8,7 +8,8 @@
         "php": ">=5.5.9",
         "laravel/framework": "5.1.*",
         "vsb/contur-focus": "^1.0",
-        "simplecurl": "^1.0"
+        "simplecurl": "^1.0",
+        "t4s/camelot-auth": "1.0.*"
     },
     "repositories":[
         {

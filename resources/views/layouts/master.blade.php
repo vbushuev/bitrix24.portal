@@ -22,6 +22,7 @@
                 </div>
                 <nav>
                     <a class="nav-item active" href="/">main</a>
+                    <a class="nav-item" href="/demo/business/credit">demo</a>
                     <a class="nav-item" href="/bitrix24">bitrix24</a>
                     <a class="nav-item" href="/contur-focus">cfocus</a>
                     <a href="#" id="nav-menu"><i class="fa fa-bars"></i></a>

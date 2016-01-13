@@ -15,3 +15,27 @@ composer.lock
 .ftpconfig
 
 *.css
+
+/public/js/demo/jquery.inputmask/build/
+test.html
+jquery-1.10.2.js
+dist/jQuery.InputMask.*.nupkg
+node_modules/
+bower_components/
+npm-debug.log
+.idea/
+*.iml
+
+public/js/demo/jquery.inputmask/.editorconfig
+
+public/js/demo/jquery.inputmask/.eslintrc
+
+public/js/demo/jquery.inputmask/.gitattributes
+
+public/js/demo/jquery.inputmask/bower.json
+
+public/js/demo/jquery.inputmask/CHANGELOG.md
+
+public/js/demo/jquery.inputmask/component.json
+
+*.md

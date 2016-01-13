@@ -14,5 +14,8 @@
 Route::get('/', function () {
     return view('welcome');
 });
+Route::get('/demo/business/credit', function () {
+    return view('demo.business.credit');
+});
 Route::controller('contur-focus', 'ConturFocusController');
 Route::controller('bitrix24', 'Bitrix24Controller');
