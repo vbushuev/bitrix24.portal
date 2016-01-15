@@ -21,9 +21,11 @@ pass 7F:pkQWJ
         <div class="modal"></div>
         <section id="banner_ke">
             <header>
+                <a href="/demo">
                 <img src="/css/demo/images/logo.png" style="width: 5em;">
                 <h2 style="vertical-align: 0.85em;">Займ Капитал-экспресс</h2>
                 <sup class="small">малые вложения - большие возможности</sup>
+            </a>
             </header>
         </section>
         <section class="wrapper style3" id="ke_banner_after">

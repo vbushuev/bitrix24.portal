@@ -1,3 +1,4 @@
+
 @extends('layouts.demo')
 @section('title', 'Кредитная карта')
 @section('content')
@@ -12,19 +13,7 @@
                     <table>
                         <tbody>
                             <tr>
-                                <td>
-                                    <em>Тип карты:
-                                        <select id="ke_type" class="select_inp" style="margin-left: 25px;">
-                                            <option>Без залога</option>
-                                            <option>Залог недвижимости</option>
-                                            <option>Залог автомобиля</option>
-                                        </select>
-                                        <hr>
-                                    </em>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td><em>Кредитный лимит:<input class="inp_slider" id="ke_summ" value="100000" type="number" min="50000" step="10000" max="2400000">руб.</em></td>
+                                <td><em>Кредитный лимит:<input class="inp_slider" id="ke_summ" value="100000" type="number" min="50000" step="10000" max="300000">руб.</em></td>
                             </tr>
                             <tr>
                                 <td>
@@ -32,7 +21,7 @@
                                 </td>
                             </tr>
                             <tr>
-                                <td><br><em>Срок займа:<input style="margin-left: 15px;" class="inp_slider" id="ke_srok" value="12" type="number" min="1" max="18" step="1/">мес.</em></td>
+                                <td><br><em>Грейс период:<input style="margin-left: 15px;" class="inp_slider" id="ke_srok" value="12" type="number" min="1" max="18" step="1/">мес.</em></td>
                             </tr>
                             <tr>
                                 <td>
@@ -44,8 +33,8 @@
               </section>
                   <section class="4u 12u(2)  payment center" style="padding-top: 179.827px;">
                       <h2 class="center">
-                          <em>Ежемесячный платеж: <br></em>
-                          <span id="ke_res">32 276 руб.</span>
+                          <em>Минимальный ежемесячный платеж: <br></em>
+                          <span id="ke_res">2 276 руб.</span>
                       </h2>
                   </section>
               </div>

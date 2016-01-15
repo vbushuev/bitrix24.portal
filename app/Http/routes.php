@@ -14,8 +14,11 @@
 Route::get('/', function () {
     return view('welcome');
 });
-Route::get('/demo/business/credit', function () {
-    return view('demo.business.credit');
-});
+Route::get('/demo', function () {return view('demo.demo');});
+Route::get('/demo/private', function () {return view('demo.private.private');});
+Route::get('/demo/private/cc', function () {return view('demo.private.cс');});
+Route::get('/demo/business', function () {return view('demo.business.business');});
+Route::get('/demo/business/credit', function () {return view('demo.business.credit');});
+// Controllers
 Route::controller('contur-focus', 'ConturFocusController');
 Route::controller('bitrix24', 'Bitrix24Controller');
