@@ -25,6 +25,11 @@
     @elseif(isset($data->result))
         <div class="content">
             Заявка создана ID - <strong>{{$data->result}}</strong>
+            @if(isset($routeback))
+            <script>
+                window.location = "{{$routeback}}";
+            </script>
+            @endif
         </div>
     @else
     <div class="form">

@@ -13,97 +13,61 @@
                     <table>
                         <tbody>
                             <tr>
-                                <td><em>Кредитный лимит:<input class="inp_slider" id="ke_summ" value="100000" type="number" min="50000" step="10000" max="300000">руб.</em></td>
+                                <td><em>Кредитный лимит:<input class="inp_slider" id="ke_summ" value="100000" type="number" min="10000" step="1000" max="300000">руб.</em></td>
                             </tr>
                             <tr>
-                                <td>
-                                    <div id="ke_summSlider" class="ui-slider ui-slider-horizontal ui-widget ui-widget-content ui-corner-all"></div><br><hr>
-                                </td>
+                                <td><div id="ke_summSlider" class="ui-slider ui-slider-horizontal ui-widget ui-widget-content ui-corner-all"></div><br><hr></td>
                             </tr>
                             <tr>
-                                <td><br><em>Грейс период:<input style="margin-left: 15px;" class="inp_slider" id="ke_srok" value="12" type="number" min="1" max="18" step="1/">мес.</em></td>
+                                <td><br><em>Грейс период:<input style="margin-left: 15px;" class="inp_slider" id="ke_srok" value="30" type="number" min="1" max="100" step="1/">дней</em></td>
                             </tr>
                             <tr>
-                                <td>
-                                    <div id="ke_srokSlider" class="ui-slider ui-slider-horizontal ui-widget ui-widget-content ui-corner-all"></div><br><hr>
-                                </td>
+                                <td><div id="ke_srokSlider" class="ui-slider ui-slider-horizontal ui-widget ui-widget-content ui-corner-all"></div><br><hr></td>
                             </tr>
-                      </tbody>
-                  </table>
-              </section>
-                  <section class="4u 12u(2)  payment center" style="padding-top: 179.827px;">
-                      <h2 class="center">
-                          <em>Минимальный ежемесячный платеж: <br></em>
-                          <span id="ke_res">2 276 руб.</span>
-                      </h2>
-                  </section>
-              </div>
-              <div class="row">
-                  <section class="12u 12u(2) center">
-                      <a class="button center" id="ke_scheludeButton" style="display: inline-block;">Показать график платежей</a>
-                      <table id="ke_scheludeTable" class="default" style="display: none;">
-              <tfoot>
-                <tr>
-                  <td colspan="5">
-                    <em>*представленный график платежей носит информационный характер и не является публичной офертой.</em>
-                  </td>
-                </tr>
-              </tfoot>
-                          <thead>
-                              <tr>
-                                  <td>#</td>
-                                  <td>Сумма платежа</td>
-                                  <td>Основной долг</td>
-                                  <td>Проценты</td>
-                                  <td>Остаток основного долга</td>
-                              </tr>
-                          </thead>
-                          <tbody><tr><td>1</td><td>32 276</td><td>19 536</td><td>12 740</td><td>280 464</td></tr><tr><td>2</td><td>32 276</td><td>20 365</td><td>11 910</td><td>260 099</td></tr><tr><td>3</td><td>32 276</td><td>21 943</td><td>10 333</td><td>238 156</td></tr><tr><td>4</td><td>32 276</td><td>22 162</td><td>10 113</td><td>215 994</td></tr><tr><td>5</td><td>32 276</td><td>23 399</td><td>8 876</td><td>192 595</td></tr><tr><td>6</td><td>32 276</td><td>24 097</td><td>8 179</td><td>168 498</td></tr><tr><td>7</td><td>32 276</td><td>25 351</td><td>6 925</td><td>143 147</td></tr><tr><td>8</td><td>32 276</td><td>26 197</td><td>6 079</td><td>116 950</td></tr><tr><td>9</td><td>32 276</td><td>27 309</td><td>4 966</td><td>89 641</td></tr><tr><td>10</td><td>32 276</td><td>28 592</td><td>3 684</td><td>61 049</td></tr><tr><td>11</td><td>32 276</td><td>29 683</td><td>2 593</td><td>31 366</td></tr><tr><td>12</td><td>32 655</td><td>31 366</td><td>1 289</td><td>0</td></tr><tr class="scheludeTotal"><td>Итого</td><td>387 686</td><td>300 000</td><td>87 686</td><td> - </td></tr></tbody>
-                      </table>
-                      <a class="button center" id="ke_scheludeClose" style="display: none; padding-top: 0.75em; padding-bottom: 0.75em;">Скрыть график платежей</a>
-                      <br><br>
-                  </section>
-              </div>
-          </div>
-      </section>
-    <section class="wrapper style2">
-          <div class="container">
-              <header class="major">
-                  <h2>Заявка на займ</h2>
-                  <p style="margin-bottom: -3em;"></p>
-              </header>
-              <div class="row" id="ke_form_small">
-                  <section class="12u 12u(2)">
-                      <div id="ke_small_form" class="formTabs">
+                        </tbody>
+                    </table>
+                </section>
+                <section class="4u 12u(2)  payment center" style="padding-top: 179.827px;">
+                    <h2 class="center">
+                        <em>Минимальный ежемесячный платеж: <br></em>
+                        <span id="ke_res">2 276 руб.</span>
+                    </h2>
+                </section>
+            </div>
+        </div>
+    </section>
+  <section class="wrapper style2">
+      <div class="container">
+          <header class="major">
+              <h2>Заявка на кредитную карту</h2>
+              <p style="margin-bottom: -3em;"></p>
+          </header>
+          <div class="row" id="ke_form_small">
+              <section class="12u 12u(2)">
+                  <div id="ke_small_form" class="formTabs">
+                      <form method="post" action="/bitrix24/cc" enctype="multipart/form-data" onsubmit="ccFormValidate()">
+                          {{ csrf_field() }}
+                          <input type="hidden" name="request_type" id="request_type" value="CC">
+                          <input type="hidden" name="source" id="source" value="demo">
+                          <input type="hidden" name="routeback" value="http://bitrix24.portal.bs2/demo/private/cc">
                           <div class="row">
-                              <!--<section class="12u 12u(2)">
-                                  <h2 class="center" style="margin-bottom: -20px;">Краткая заявка</h2>
-                              </section>-->
                               <section class="4u 12u(2)">
-                                  <label for="ke_small_type">
-                                      <span>Вид займа:</span>
-                                      <select class="inputSelect" id="ke_small_type" type="select" name="UF_CRM_1450769723">
-                                          <option value="CD">Без залога</option>
-                                          <option value="CDN">Залог недвижимости</option>
-                                          <option value="CDA">Залог автомобиля</option>
-                                      </select>
+                                  <label for="fio[last]">
+                                      <span>Фамилия</span>
+                                      <input type="text" name="fio[last]" id="fio[last]" placeholder="Фамилия" value="Пупкин">
+                                  </label>
+                              </section>
+
+                              <section class="4u 12u(2)">
+                                  <label for="fio[name]">
+                                      <span>Имя</span>
+                                      <input type="text" name="fio[name]" id="fio[name]" placeholder="Имя" value="Виталий">
                                   </label>
                               </section>
                               <section class="4u 12u(2)">
-                                  <label for="ke_small_summ">
-                                      <span>Сумма займа:</span>
-                                      <input type="number" name="OPPORTUNITY" class="inputNumber" id="ke_small_summ" value="400000" tooltip="Укажите необходимый размер лимита (в рублях) <hr/> ✓ Например: 400 000">
-                                      <input type="hidden" name="CURRENCY_ID" value="RUB">
-                                  </label>
-                              </section>
-                              <section class="4u 12u(2)">
-                                  <label for="ke_small_auto" style="display: none;">
-                                      <span>Автомобиль:</span>
-                                      <input type="text" name="UF_CRM_1450772521" id="ke_small_auto" tooltip="Укажите марку, модель и год выпуска автомобиля <hr/>✓ Например: Opel Astra 2010">
-                                  </label>
-                                  <label for="ke_small_build" style="display: none;">
-                                      <span>Недвижимость:</span>
-                                      <input type="text" name="UF_CRM_1450772521" id="ke_small_build" value="Квартира ул. Милашенкова д.1, 83" tooltip="Укажите объект недвижимости <hr/>✓ Например: Квартира ул. Милашенкова д.1, 83">
+                                  <label for="fio[name]">
+                                      <span>Отчество</span>
+                                      <input type="text" name="fio[sur]" id="fio[sur]" placeholder="Отчество" value="Лукьянович">
                                   </label>
                               </section>
                           </div>
@@ -111,15 +75,22 @@
                               <section class="4u 12u(2)">
                                   <label for="ke_small_phone">
                                       <span>Телефон:</span>
-                                      <input type="tel" name="PHONE[0][VALUE]" id="ke_small_phone" mask="+7 (999) 999 99 99" value="+79265766710" tooltip="Укажите телефон для связи <hr/>✓ Например: 8 123 456 78 90">
-                                      <input type="hidden" name="PHONE[0][VALUE_TYPE]" value="WORK">
+                                      <input type="tel" name="phone[0][VALUE]" id="ke_small_phone" mask="+7 (999) 999 99 99" value="+79265766710" tooltip="Укажите телефон для связи <hr/>✓ Например: 8 123 456 78 90">
+                                      <input type="hidden" name="phone[0][VALUE_TYPE]" value="WORK">
                                   </label>
                               </section>
                               <section class="4u 12u(2)">
-                                  <label for="ke_small_name">
-                                      <span>Ваше имя:</span>
-                                      <input type="text" name="NAME" id="ke_small_name" value="Иван" tooltip="Как к Вам обращаться? <hr/>
-                               ✓ Например: Иван Иванович">
+                                  <label for="passport">
+                                      <span>Паспорт:</span>
+                                      <input type="file" name="passport" id="passport" placeholder="Скан паспорта">
+                                  </label>
+                              </section>
+                          </div>
+                          <div class="row">
+                              <section class="4u 12u">
+                                  <label for="amount">
+                                      <span>Кредитный лимит:</span>
+                                      <input type="number" name="amount" id="amount" placeholder="Кредитный лимит" value="100000">
                                   </label>
                               </section>
                           </div>
@@ -127,11 +98,11 @@
                               <section class="6u 12u(2)">
                                   <label for="ke_small_check">
                                       <input type="checkbox" id="ke_small_check" checked="true">
-                                      <span>Я согласен(согласна) с <a id="personal_data_condition">условиями обработки</a>моих персональных данных</span>
+                                      <span>Я согласен(согласна) с <a id="personal_data_condition">условиями обработки</a> моих персональных данных</span>
                                   </label>
                               </section>
                               <section class="6u 12u(2)">
-                                  <a class="button center" id="ke_small_submit">Отправить</a>
+                                  <button type="submit" id="getcc_submit">Оставить заявку</button>
                               </section>
                           </div>
                           <div class="row">
@@ -142,40 +113,38 @@
                                   <p>Группа Компаний не передает третьим лицам информацию, полученную при заполнении заявок. <a href="#" target="_blank">Правила обработки персональных данных</a> гарантируют защиту и конфиденциальность передаваемой информации.</p>
                               </section>
                           </div>
-                      </div>
+                      </form></div>
                   </section>
               </div>
           </div>
       </section>
-  <section class="wrapper style1">
-      <div class="container">
-          <div class="formTabs">
-              <header class="major">
-        <h2>Связаться с нами</h2>
-        <p style="margin-bottom: -3em;"></p>
-      </header>
-      <div class="row">
-        <section class="12u 12u(2)">
-          Наши специалисты проконсультируют по любому вопросу по телефону
-          <p class="phone"><a href="tel:+74999998877"> +7 (499) 999 88 77</a>  (работает круглосуточно)</p>
+      <section class="wrapper style1">
+          <div class="container">
+              <div class="formTabs">
+                  <header class="major">
+                      <h2>Связаться с нами</h2>
+                      <p style="margin-bottom: -3em;"></p>
+                  </header>
+                  <div class="row">
+                      <section class="12u 12u(2)">
+                          Наши специалисты проконсультируют по любому вопросу по телефону
+                          <p class="phone"><a href="tel:+74999998877"> +7 (499) 999 88 77</a>  (работает круглосуточно)</p>
 
-          Вы можете оставить заявку на обратный звонок, мы свяжемся в указанное Вами время
-          <p class="phone"><a id="ke_call_me">Заявка на обратный звонок</a></p>
+                          Вы можете оставить заявку на обратный звонок, мы свяжемся в указанное Вами время
+                          <p class="phone"><a id="ke_call_me">Заявка на обратный звонок</a></p>
 
-          Также предлагаем ознакомиться со списком часто задаваемых вопросов по продукту "Капитал-экспресс"
-          <p class="phone"><a id="ke_faq">Часто задаваемые вопросы</a></p>
-
-        </section>
-      </div>
+                          Также предлагаем ознакомиться со списком часто задаваемых вопросов по продукту "Капитал-экспресс"
+                          <p class="phone"><a id="ke_faq">Часто задаваемые вопросы</a></p>
+                      </section>
+                  </div>
+              </div>
           </div>
-  </div>
-  <section>
-  <section class="wrapper style2">
+      </section>
+      <!--<section class="wrapper style2">
           <div class="container">
               <header class="major">
                   <h2>Основные условия</h2>
-                  <p style="margin-bottom: -3em;">
-          </p>
+                  <p style="margin-bottom: -3em;"></p>
               </header>
               <div class="row" id="ke_tabs_accord">
                   <section class="12u 12u(2)">
@@ -358,27 +327,9 @@
                   </section>
               </div>
           </div>
-      </section>
-    <section class="wrapper style1">
-          <div class="container">
-              <header class="major">
-                  <h2>Документы</h2>
-                  <p style="margin-bottom: -4em;"></p>
-              </header>
-              <div class="row" id="docs">
-                  <section class="12u 12u(2)">
-            <ul class="my_ul">
-              <li><a href="#docs">Правила предоставления микрозаймов</a></li>
-              <li><a href="#docs">Образец договора микрозайма</a></li>
-              <li><a href="#docs">Образец договора поручительства</a></li>
-              <li><a href="#docs">Образец договора залога</a></li>
-                    <li><a href="#docs">Брошюра Банка России о работе с МФО</a></li>
-            </ul>
-          </section>
-        </div>
-      </div>
-    </section>
+      </section>-->
+
 @endsection
 @section('scripts')
-<script src="/js/demo/capital-express.js"></script>
+<script src="/js/demo/credit-card.js"></script>
 @endsection

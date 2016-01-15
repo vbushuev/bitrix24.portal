@@ -63,6 +63,7 @@ class Bitrix24Controller extends Controller{
     }
     public function postCc(Request $rq){
         $fio = $rq->input('fio');
+        $routeback = $rq->input('routeback');
         $uploadFile = [];
         if($rq->hasFile('passport')){
             $scan = $rq->file('passport')->move('../storage/logs/');
@@ -90,6 +91,7 @@ class Bitrix24Controller extends Controller{
         $vd = [
             'session' => $this->getBitrix24Data($rq),
             'debug' => "File path: [".($rq->hasFile('passport')?$uploadFile[1]:'nofile uploaded')."]",
+            'routeback' => $routeback,
             'data' => $this->callBX([
                 'action' => 'crm.lead.add',
                 'params' => [
