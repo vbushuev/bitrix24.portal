@@ -1,5 +1,7 @@
+//91,30434782608692
 //ke window resize
 (function () {
+	$("#routeback").val(window.location);
 	paymentPadding();
 	$(window).resize(function () {
 		fnDelay(function () {
@@ -32,6 +34,8 @@
 		}
 	}
 })();
+
+
 
 //calc ke
 $("#ke_summSlider").slider({

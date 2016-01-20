@@ -49,7 +49,8 @@
                           {{ csrf_field() }}
                           <input type="hidden" name="request_type" id="request_type" value="CC">
                           <input type="hidden" name="source" id="source" value="demo">
-                          <input type="hidden" name="routeback" value="http://bitrix24.portal.bs2/demo/private/cc">
+                          <!--<input type="hidden" name="routeback" id="routeback" value="http://bitrix24.portal.bs2/demo/private/cc">-->
+                          <input type="hidden" name="routeback" id="routeback" value="">
                           <div class="row">
                               <section class="4u 12u(2)">
                                   <label for="fio[last]">
